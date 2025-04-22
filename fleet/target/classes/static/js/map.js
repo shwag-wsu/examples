@@ -61,8 +61,35 @@ function showTruckDetails(id) {
       modal.show();
     });
 }
+// Replace polling with SSE
+function setupSSE() {
+  const eventSource = new EventSource("http://localhost:8080/fleet/stream");
+
+  eventSource.addEventListener("truck-update", (e) => {
+    const trucks = JSON.parse(e.data);
+    trucks.forEach(truck => {
+      const { id, driverName, latitude, longitude } = truck;
+
+      if (markers[id]) {
+        markers[id].setLatLng([latitude, longitude]);
+      } else {
+        const marker = L.marker([latitude, longitude])
+          .addTo(map)
+          .bindPopup(`${driverName}`)
+          .on("click", () => showTruckDetails(id));
+        markers[id] = marker;
+      }
+    });
+  });
+
+  eventSource.onerror = () => {
+    console.error("SSE error or disconnected.");
+    eventSource.close(); // reconnect logic could go here
+  };
+}
 
 // Initial load + polling
 fetchAndRenderTrucks();
 fetchAndRenderStations();
-setInterval(fetchAndRenderTrucks, 5000);
+setupSSE(); 
+//setInterval(fetchAndRenderTrucks, 5000);

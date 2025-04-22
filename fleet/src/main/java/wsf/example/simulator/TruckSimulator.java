@@ -54,5 +54,6 @@ public class TruckSimulator {
             truck.setEtaMinutes(Math.max(1, truck.getEtaMinutes() - 1)); // simulate ETA countdown
             fleetService.updateTruck(truck);
         });
+        fleetService.broadcastTrucks(fleetService.getAllTrucks());
     }
 }

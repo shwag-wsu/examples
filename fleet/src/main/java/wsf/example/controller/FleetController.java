@@ -4,6 +4,7 @@ import wsf.example.model.FuelTruck;
 import wsf.example.model.Station;
 import wsf.example.service.FleetService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
 
@@ -16,7 +17,10 @@ public class FleetController {
     public FleetController(FleetService service) {
         this.service = service;
     }
-
+    @GetMapping("/stream")
+    public SseEmitter streamTrucks() {
+        return service.registerEmitter();
+    }
     @GetMapping
     public List<FuelTruck> getAllTrucks() {
         return service.getAllTrucks();
