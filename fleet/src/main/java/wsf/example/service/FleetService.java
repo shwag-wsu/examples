@@ -1,6 +1,8 @@
 package wsf.example.service;
 
 import wsf.example.model.FuelTruck;
+import wsf.example.model.Station;
+
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -9,6 +11,17 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class FleetService {
     private final Map<String, FuelTruck> trucks = new ConcurrentHashMap<>();
+    private final Map<String, Station> stations = new ConcurrentHashMap<>();
+
+    public List<Station> getAllStations() {
+        return new ArrayList<>(stations.values());
+    }
+
+    public void preloadStations(List<Station> list) {
+        for (Station s : list) {
+            stations.put(s.getId(), s);
+        }
+    }
 
     public List<FuelTruck> getAllTrucks() {
         return new ArrayList<>(trucks.values());

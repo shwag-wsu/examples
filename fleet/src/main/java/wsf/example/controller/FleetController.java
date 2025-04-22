@@ -1,6 +1,7 @@
 package wsf.example.controller;
 
 import wsf.example.model.FuelTruck;
+import wsf.example.model.Station;
 import wsf.example.service.FleetService;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,4 +26,9 @@ public class FleetController {
     public FuelTruck getTruck(@PathVariable String id) {
         return service.getTruckById(id).orElseThrow(() -> new RuntimeException("Truck not found"));
     }
+    @GetMapping("/stations")
+    public List<Station> getStations() {
+        return service.getAllStations();
+    }
+   
 }

@@ -27,7 +27,22 @@ function fetchAndRenderTrucks() {
       });
     });
 }
-
+function fetchAndRenderStations() {
+  fetch("http://localhost:8080/fleet/stations")
+    .then(res => res.json())
+    .then(stations => {
+      stations.forEach(station => {
+        L.circleMarker([station.latitude, station.longitude], {
+          radius: 8,
+          color: 'blue',
+          fillColor: '#007BFF',
+          fillOpacity: 0.8
+        })
+        .addTo(map)
+        .bindPopup(`<strong>${station.name}</strong>`);
+      });
+    });
+}
 function showTruckDetails(id) {
   fetch(`${API_BASE}/${id}`)
     .then(res => res.json())
@@ -49,4 +64,5 @@ function showTruckDetails(id) {
 
 // Initial load + polling
 fetchAndRenderTrucks();
+fetchAndRenderStations();
 setInterval(fetchAndRenderTrucks, 5000);
