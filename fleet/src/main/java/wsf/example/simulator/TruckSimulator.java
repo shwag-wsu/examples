@@ -23,10 +23,10 @@ public class TruckSimulator {
     @PostConstruct
     public void init() {
        fleetService.preloadStations(List.of(
-        new Station("station-01", "Depot Miami", 25.7617, -80.1918),
-        new Station("station-02", "Depot Fort Lauderdale", 26.1224, -80.1373),
-        new Station("station-03", "Depot Tampa", 27.9506, -82.4572),
-        new Station("station-04", "Depot Orlando", 28.5383, -81.3792)
+        new Station("station-01", "Depot Miami", 25.7617, -80.1918,10000),
+        new Station("station-02", "Depot Fort Lauderdale", 26.1224, -80.1373,20000),
+        new Station("station-03", "Depot Tampa", 27.9506, -82.4572,5000),
+        new Station("station-04", "Depot Orlando", 28.5383, -81.3792,1000)
     ));
 
     List<FuelTruck> trucks = List.of(
