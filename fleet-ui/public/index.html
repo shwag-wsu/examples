@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fuel Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body class="p-2">
+  <div class="container-fluid">
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Fuel Tracker</a>
+      </div>
+    </nav>
+    <div id="map"></div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="truckModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Truck Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="truckDetails"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
