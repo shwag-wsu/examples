@@ -1,4 +1,4 @@
-name: Build and upload binary artifact
+name: Build and upload binary artifact to S3
 
 on: push
 
