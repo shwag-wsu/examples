@@ -7,6 +7,8 @@ import { Modal } from 'bootstrap';
 import L from 'leaflet';
 
 const API_BASE = "http://localhost:8080/fleet";
+let alertCount = 0;
+let chatCount = 0;
 
 // Your original map.js logic here, e.g.:
 const map = L.map('map').setView([25.774, -80.19], 10);
@@ -162,7 +164,17 @@ function setupSSE() {
     eventSource.close(); // reconnect logic could go here
   };
 }
-
+function updateBadge(id, count) {
+    const badge = document.getElementById(`${id}-badge`);
+    if (badge) {
+      if (count > 0) {
+        badge.style.display = 'inline-block';
+        badge.innerText = count;
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+  }
 function handleButtonClick(id) {
     switch(id) {
       case 'stationsBtn':
@@ -204,18 +216,25 @@ const CustomPanelControl = L.Control.extend({
     L.DomEvent.disableClickPropagation(dropdown);
 
       const buttons = [
-        { icon: '<i class="fas fa-chart-bar"></i> <span class="badge text-bg-secondary">4</span>', title: 'Dashboard', id: 'dashboardBtn' },
+        { icon: '<i class="fas fa-chart-bar"></i>', title: 'Dashboard', id: 'dashboardBtn' },
         { icon: '<i class="fas fa-exclamation-triangle"></i>', title: 'Alerts', id: 'alertsBtn' },
         { icon: '<i class="fas fa-comments"></i>', title: 'Chat', id: 'chatBtn' },
       ];
       buttons.forEach(btn => {
-        const el = L.DomUtil.create('button', 'btn btn-sm btn-outline-primary', container);
+        const el = L.DomUtil.create('button', 'btn btn-sm btn-outline-primary position-relative', container);
         el.innerHTML = btn.icon;
         el.title = btn.title;
         el.id = btn.id;
         el.style.width = '36px';
         el.style.height = '36px';
        
+    // Badge element
+    const badge = L.DomUtil.create('span', 'position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger', el);
+    badge.id = `${btn.id}-badge`;
+    badge.innerText = ''; // Start empty
+    badge.style.display = 'none'; // Hidden initially
+    badge.style.fontSize = '0.65rem';
+
         // prevent map from eating click
         L.DomEvent.on(el, 'mousedown dblclick click', L.DomEvent.stopPropagation)
                   .on(el, 'click', () => handleButtonClick(btn.id));
@@ -227,10 +246,35 @@ const CustomPanelControl = L.Control.extend({
   
 map.addControl(new CustomPanelControl({ position: 'topleft' }));
 }
+
+document.getElementById('chatModal').addEventListener('hidden.bs.modal', () => {
+    chatCount = 0;
+    updateBadge('chatBtn', 0);
+  });
+  
+  document.getElementById('alertsModal').addEventListener('hidden.bs.modal', () => {
+    alertCount=0;
+    updateBadge('alertsBtn', 0);
+  });
 // Initial load + polling
 CreateToolbar();
 fetchAndRenderTrucks();
 fetchAndRenderStations();
 setupSSE(); 
+
+
+setInterval(() => {
+  // Simulate an alert
+  alertCount++;
+  updateBadge('alertsBtn', alertCount);
+  console.log(`New alert #${alertCount}`);
+}, 7000); // every 7 sec
+
+setInterval(() => {
+  // Simulate chat
+  chatCount++;
+  updateBadge('chatBtn', chatCount);
+  console.log(`New chat message #${chatCount}`);
+}, 5000); // every 5 sec
 
 //setInterval(fetchAndRenderTrucks, 5000);
