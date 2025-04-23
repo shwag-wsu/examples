@@ -3,7 +3,10 @@ import 'leaflet/dist/leaflet.css';
 import './style.css';
 
 import 'bootstrap';
+import { Modal } from 'bootstrap';
 import L from 'leaflet';
+
+const API_BASE = "http://localhost:8080/fleet";
 
 // Your original map.js logic here, e.g.:
 const map = L.map('map').setView([25.774, -80.19], 10);
@@ -19,6 +22,9 @@ const getColorClass = (qty) => {
   if (qty < 6000) return 'background-color:#F59E0B'; // orange
   return 'background-color:#22C55E'; // green
 };
+
+
+
 
 function CreateStationButton(station) {
 const CustomButtonControl = L.Control.extend({
@@ -157,7 +163,72 @@ function setupSSE() {
   };
 }
 
+function handleButtonClick(id) {
+    switch(id) {
+      case 'stationsBtn':
+        map.setView([25.774, -80.19], 10); // Example zoom to station region
+        break;
+      case 'dashboardBtn':
+        new Modal(document.getElementById('dashboardModal')).show();
+        break;
+      case 'alertsBtn':
+        new Modal(document.getElementById('alertsModal')).show();
+        break;
+      case 'chatBtn':
+        new Modal(document.getElementById('chatModal')).show();
+        break;
+    }
+  }
+
+function CreateToolbar() {
+const CustomPanelControl = L.Control.extend({
+    onAdd: function () {
+      const container = L.DomUtil.create('div', 'leaflet-bar flex-column d-flex gap-1 p-2 bg-white shadow');
+  
+     // Station Dropdown
+    const dropdown = L.DomUtil.create('div', 'dropdown', container);
+    dropdown.innerHTML = `
+    <div class="btn-group dropend">
+      <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+        <i class="fas fa-gas-pump"></i>
+      </button>
+      <ul class="dropdown-menu" id="stationsDropdown">
+        <!-- Stations will be dynamically added here -->
+        <li><a href="">Station1</a></li>
+        <li><a href="">Station2</a></li>
+      </ul>
+      </div>
+    `;
+
+    // Prevent map from closing dropdown
+    L.DomEvent.disableClickPropagation(dropdown);
+
+      const buttons = [
+        { icon: '<i class="fas fa-chart-bar"></i> <span class="badge text-bg-secondary">4</span>', title: 'Dashboard', id: 'dashboardBtn' },
+        { icon: '<i class="fas fa-exclamation-triangle"></i>', title: 'Alerts', id: 'alertsBtn' },
+        { icon: '<i class="fas fa-comments"></i>', title: 'Chat', id: 'chatBtn' },
+      ];
+      buttons.forEach(btn => {
+        const el = L.DomUtil.create('button', 'btn btn-sm btn-outline-primary', container);
+        el.innerHTML = btn.icon;
+        el.title = btn.title;
+        el.id = btn.id;
+        el.style.width = '36px';
+        el.style.height = '36px';
+       
+        // prevent map from eating click
+        L.DomEvent.on(el, 'mousedown dblclick click', L.DomEvent.stopPropagation)
+                  .on(el, 'click', () => handleButtonClick(btn.id));
+      });
+  
+      return container;
+    }
+  });
+  
+map.addControl(new CustomPanelControl({ position: 'topleft' }));
+}
 // Initial load + polling
+CreateToolbar();
 fetchAndRenderTrucks();
 fetchAndRenderStations();
 setupSSE(); 

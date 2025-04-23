@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>Fuel Tracker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-pIVwKqN8...HASH_TRUNCATED..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="p-2">
   <div class="container-fluid">
@@ -11,6 +12,7 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Fuel Tracker</a>
       </div>
+
     </nav>
     <div id="map"></div>
   </div>
@@ -26,6 +28,29 @@
         <div class="modal-body" id="truckDetails"></div>
       </div>
     </div>
+  </div>
+  <!-- Dashboard Modal -->
+<div class="modal fade" id="dashboardModal" tabindex="-1">
+    <div class="modal-dialog"><div class="modal-content"><div class="modal-header">
+      <h5 class="modal-title">Dashboard</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </div><div class="modal-body">Your dashboard content here</div></div></div>
+  </div>
+  
+  <!-- Alerts Modal -->
+  <div class="modal fade" id="alertsModal" tabindex="-1">
+    <div class="modal-dialog"><div class="modal-content"><div class="modal-header">
+      <h5 class="modal-title">Alerts</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </div><div class="modal-body">List of alerts...</div></div></div>
+  </div>
+  
+  <!-- Chat Modal -->
+  <div class="modal fade" id="chatModal" tabindex="-1">
+    <div class="modal-dialog"><div class="modal-content"><div class="modal-header">
+      <h5 class="modal-title">Chat</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </div><div class="modal-body">Chat UI here...</div></div></div>
   </div>
 </body>
 </html>
