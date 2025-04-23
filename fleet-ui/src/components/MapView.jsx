@@ -31,7 +31,7 @@ const MapView = () => {
 
   return (
     
-    <div className="w-full" style={{ height: "calc(100vh - 4rem)" }}>
+    <div className="w-fulw-full h-screen pt-16">
     <MapContainer center={[25.774, -80.19]} zoom={7} style={{ height: "100%", width: "100%" }}>
       <TileLayer
         attribution="© OpenStreetMap"
@@ -39,14 +39,47 @@ const MapView = () => {
       />
   
       {stations.map(station => (
-        <CircleMarker
-          key={station.id}
-          center={[station.latitude, station.longitude]}
-          pathOptions={{ color: 'blue' }}
-          radius={8}
-        >
-          <Popup>{station.name}</Popup>
-        </CircleMarker>
+        <Marker
+        key={station.id}
+        position={[station.latitude, station.longitude]}
+        icon={L.divIcon({
+          className: '',
+          html: `
+            <div style="
+              width: 80px;
+              text-align: center;
+              font-family: sans-serif;
+            ">
+              <div style="
+                font-size: 24px;
+                margin-bottom: 2px;
+              ">⛽️</div>
+              <div style="
+                font-size: 11px;
+                font-weight: bold;
+                color: #111;
+                margin-bottom: 2px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              ">${station.name}</div>
+              <div style="
+                height: 6px;
+                width: 100%;
+                background-color: #e5e7eb;
+                border-radius: 4px;
+                overflow: hidden;
+              ">
+                <div style="
+                  height: 100%;
+                  width: ${Math.min((station.fuelQty ?? 0) / 100, 100)}%;
+                  ${getColorClass(station.fuelQty ?? 0)};
+                "></div>
+              </div>
+            </div>
+          `,
+        })}
+      />
       ))}
   
       {trucks.map(truck => (
@@ -54,9 +87,41 @@ const MapView = () => {
           key={truck.id}
           position={[truck.latitude, truck.longitude]}
           icon={L.divIcon({
-            className: `text-white text-xs p-1 rounded`,
-            html: `<div style="text-align:center; ${getColorClass(truck.fuelQty)}">${truck.driverName}</div>`,
-
+            className: '',
+            html: `
+              <div style="
+                width: 60px;
+                text-align: center;
+                font-family: sans-serif;
+              ">
+                <div style="
+                  font-size: 28px;
+                  margin-bottom: 2px;
+                ">🚚</div>
+                <div style="
+                  font-size: 12px;
+                  font-weight: bold;
+                  color: #111;
+                  margin-bottom: 2px;
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                ">${truck.driverName}</div>
+                <div style="
+                  height: 6px;
+                  width: 100%;
+                  background-color: #e5e7eb;
+                  border-radius: 4px;
+                  overflow: hidden;
+                ">
+                  <div style="
+                    height: 100%;
+                    width: ${Math.min(truck.fuelQty / 100, 100)}%;
+                    ${getColorClass(truck.fuelQty)};
+                  "></div>
+                </div>
+              </div>
+            `,
           })}
         >
           <Popup>
