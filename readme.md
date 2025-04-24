@@ -66,13 +66,15 @@ Subscribe to alerts using Server-Sent Events (SSE):
 SSE Endpoint
 GET /api/alerts/stream
 
-```java
-const eventSource = new EventSource('/api/alerts/stream');
+   <pre>
+     const eventSource = new EventSource('/api/alerts/stream')
 
 eventSource.addEventListener("alert", (e) => {
   const alert = JSON.parse(e.data);
   console.log('New alert:', alert.message);
-});
+})
+</pre>
+
 
 ## 🚀 Deployment
 ### Environment Variables
