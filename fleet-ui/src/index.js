@@ -6,7 +6,8 @@ import 'bootstrap';
 import { Modal } from 'bootstrap';
 import L from 'leaflet';
 
-const API_BASE = "http://localhost:8080/fleet";
+const API_BASE = window.API_BASE || 'http://44.206.236.105';
+
 let alertCount = 0;
 let chatCount = 0;
 
@@ -66,7 +67,7 @@ return L.divIcon({
 }
 
 function fetchAndRenderTrucks() {
-  fetch(API_BASE)
+  fetch(API_BASE +"/api/fleet")
     .then(res => res.json())
     .then(data => {
       data.forEach(truck => {
@@ -95,7 +96,7 @@ function fetchAndRenderTrucks() {
 
 
 function fetchAndRenderStations() {
-  fetch("http://localhost:8080/fleet/stations")
+  fetch(API_BASE +"/api/fleet/stations")
     .then(res => res.json())
     .then(stations => {
       stations.forEach(station => {
@@ -121,10 +122,10 @@ function fetchAndRenderStations() {
     });
 }
 function showTruckDetails(id) {
-  fetch(`${API_BASE}/${id}`)
+  fetch(`${API_BASE}/api/fleet/${id}`)
     .then(res => res.json())
     .then(truck => {
-      const modal = new bootstrap.Modal(document.getElementById("truckModal"));
+      const modal = new Modal(document.getElementById("truckModal"));
       const details = `
         <strong>Driver:</strong> ${truck.driverName}<br>
         <strong>Fuel Qty:</strong> ${truck.fuelQty} L<br>
@@ -140,7 +141,7 @@ function showTruckDetails(id) {
 }
 // Replace polling with SSE
 function setupSSE() {
-  const eventSource = new EventSource("http://localhost:8080/fleet/stream");
+  const eventSource = new EventSource(API_BASE +"/api/fleet/stream");
 
   eventSource.addEventListener("truck-update", (e) => {
     const trucks = JSON.parse(e.data);
@@ -263,18 +264,18 @@ fetchAndRenderStations();
 setupSSE(); 
 
 
-setInterval(() => {
+//setInterval(() => {
   // Simulate an alert
-  alertCount++;
-  updateBadge('alertsBtn', alertCount);
-  console.log(`New alert #${alertCount}`);
-}, 7000); // every 7 sec
+  //alertCount++;
+  //updateBadge('alertsBtn', alertCount);
+  //console.log(`New alert #${alertCount}`);
+//}, 7000); // every 7 sec
 
-setInterval(() => {
+//setInterval(() => {
   // Simulate chat
-  chatCount++;
-  updateBadge('chatBtn', chatCount);
-  console.log(`New chat message #${chatCount}`);
-}, 5000); // every 5 sec
+  //chatCount++;
+  //updateBadge('chatBtn', chatCount);
+  //console.log(`New chat message #${chatCount}`);
+//}, 5000); // every 5 sec
 
 //setInterval(fetchAndRenderTrucks, 5000);
