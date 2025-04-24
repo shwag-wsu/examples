@@ -73,3 +73,28 @@ eventSource.addEventListener("alert", (e) => {
   const alert = JSON.parse(e.data);
   console.log('New alert:', alert.message);
 });
+
+## 🚀 Deployment
+### Environment Variables
+
+SERVER_PORT — Port for the app (default: 8080)
+
+SPRING_PROFILES_ACTIVE — Active Spring profiles
+
+Example (Custom Port)
+
+``` bash
+java -jar -Dserver.port=9090 target/fleet-backend-0.0.1-SNAPSHOT.jar
+
+
+## 🤝 Contributing
+### Fork the project
+
+1. **Create** a new branch (git checkout -b feature/new-feature)
+
+Commit changes (git commit -am 'Add new feature')
+
+Push to the branch (git push origin feature/new-feature)
+
+Create a Pull Request
+
