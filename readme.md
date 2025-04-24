@@ -41,7 +41,35 @@ A Spring Boot application that provides RESTful APIs and real-time Server-Sent E
    git clone https://github.com/shwag-wsu/examples.git
    cd examples
 
- 2. **Navigate to the backend**
+2. **Navigate to the backend**
 
    ```bash
    cd fleet-backend
+
+3. **Build the application**
+
+   ```bash
+   mvn clean install
+
+
+4. **Run the server**
+
+   ```bash
+    java -jar target/fleet-backend-0.0.1-SNAPSHOT.jar
+
+The server runs at http://localhost:8080.
+
+
+## 🔔 Real-Time Alerts
+Subscribe to alerts using Server-Sent Events (SSE):
+
+SSE Endpoint
+GET /api/alerts/stream
+
+```java
+const eventSource = new EventSource('/api/alerts/stream');
+
+eventSource.addEventListener("alert", (e) => {
+  const alert = JSON.parse(e.data);
+  console.log('New alert:', alert.message);
+});
