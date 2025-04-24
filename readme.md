@@ -66,7 +66,7 @@ Subscribe to alerts using Server-Sent Events (SSE):
 SSE Endpoint
 GET /api/alerts/stream
 
-   <pre>
+<pre>
      const eventSource = new EventSource('/api/alerts/stream')
 
 eventSource.addEventListener("alert", (e) => {
@@ -85,8 +85,10 @@ SPRING_PROFILES_ACTIVE — Active Spring profiles
 
 Example (Custom Port)
 
-``` bash
-java -jar -Dserver.port=9090 target/fleet-backend-0.0.1-SNAPSHOT.jar
+<pre>
+
+    java -jar target/fleet-backend-0.0.1-SNAPSHOT.jar
+</pre> 
 
 
 ## 🤝 Contributing
