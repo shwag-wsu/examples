@@ -2,55 +2,55 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Fleet Tracker</title>
+  <title>Fuel Tracker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Leaflet + Bootstrap -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-pIVwKqN8...HASH_TRUNCATED..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <style>
-    #map { height: 90vh; width: 100%; }
-  </style>
-</head>
+<script defer src="bundle.js"></script></head>
 <body class="p-2">
-
   <div class="container-fluid">
-
     <nav class="navbar bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bootstrap-fill d-inline-block me-2" viewBox="0 0 16 16">
-            <path d="M6.375 7.125V4.658h1.78c.973 0 1.542.457 1.542 1.237 0 .802-.604 1.23-1.764 1.23H6.375zm0 3.762h1.898c1.184 0 1.81-.48 1.81-1.377 0-.885-.65-1.348-1.886-1.348H6.375v2.725z"/>
-            <path d="M4.002 0a4 4 0 0 0-4 4v8a4 4 0 0 0 4 4h8a4 4 0 0 0 4-4V4a4 4 0 0 0-4-4h-8zm1.06 12V3.545h3.399c1.587 0 2.543.809 2.543 2.11 0 .884-.65 1.675-1.483 1.816v.1c1.143.117 1.904.931 1.904 2.033 0 1.488-1.084 2.396-2.888 2.396H5.062z"/>
-          </svg>
-          Bootstrap
-        </a>
+        <a class="navbar-brand" href="#">Fuel Tracker</a>
       </div>
-    </nav>
 
-    
+    </nav>
     <div id="map"></div>
   </div>
 
   <!-- Modal -->
-  <div class="modal fade" id="truckModal" tabindex="-1" aria-labelledby="truckModalLabel" aria-hidden="true">
+  <div class="modal fade" id="truckModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="truckModalLabel">Truck Details</h5>
+          <h5 class="modal-title">Truck Details</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" id="truckDetails">
-          <!-- Truck info goes here -->
-        </div>
+        <div class="modal-body" id="truckDetails"></div>
       </div>
     </div>
   </div>
-
-  <!-- Scripts -->
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/map.js"></script>
+  <!-- Dashboard Modal -->
+<div class="modal fade" id="dashboardModal" tabindex="-1">
+    <div class="modal-dialog"><div class="modal-content"><div class="modal-header">
+      <h5 class="modal-title">Dashboard</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </div><div class="modal-body">Your dashboard content here</div></div></div>
+  </div>
+  
+  <!-- Alerts Modal -->
+  <div class="modal fade" id="alertsModal" tabindex="-1">
+    <div class="modal-dialog"><div class="modal-content"><div class="modal-header">
+      <h5 class="modal-title">Alerts</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </div><div class="modal-body">List of alerts...</div></div></div>
+  </div>
+  
+  <!-- Chat Modal -->
+  <div class="modal fade" id="chatModal" tabindex="-1">
+    <div class="modal-dialog"><div class="modal-content"><div class="modal-header">
+      <h5 class="modal-title">Chat</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+    </div><div class="modal-body">Chat UI here...</div></div></div>
+  </div>
 </body>
 </html>

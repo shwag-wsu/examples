@@ -6,7 +6,9 @@ import 'bootstrap';
 import { Modal } from 'bootstrap';
 import L from 'leaflet';
 
-const API_BASE = window.API_BASE || 'http://44.206.236.105';
+//const API_BASE = window.API_BASE || 'http://44.206.236.105';
+
+const API_BASE = 'http://localhost:8080';
 
 let alertCount = 0;
 let chatCount = 0;
@@ -28,7 +30,7 @@ const getColorClass = (qty) => {
 
 
 
-
+/*
 function CreateStationButton(station) {
 const CustomButtonControl = L.Control.extend({
   onAdd: function () {
@@ -48,7 +50,7 @@ const CustomButtonControl = L.Control.extend({
 });
 map.addControl(new CustomButtonControl({ position: 'topright' }));
 }
-
+*/
 function truckIcon(truck) {
 
 return L.divIcon({
@@ -67,7 +69,7 @@ return L.divIcon({
 }
 
 function fetchAndRenderTrucks() {
-  fetch(API_BASE +"/api/fleet")
+  fetch(API_BASE +"/api/trucks")
     .then(res => res.json())
     .then(data => {
       data.forEach(truck => {
@@ -96,33 +98,30 @@ function fetchAndRenderTrucks() {
 
 
 function fetchAndRenderStations() {
-  fetch(API_BASE +"/api/fleet/stations")
+  fetch(API_BASE +"/api/airports")
     .then(res => res.json())
-    .then(stations => {
-      stations.forEach(station => {
-        CreateStationButton(station);
+    .then(airports => {
+      airports.forEach(airport => {
+        //CreateStationButton(station);
 
-        const stationIcon = L.divIcon({
+        const airportIcon = L.divIcon({
           className: '',
           html: `
-           <div style="width: 80px; text-align: center; font-family: sans-serif;">
-                  <div style="font-size: 24px;">⛽️</div>
-                  <div style="font-size: 11px; font-weight: bold; margin-bottom: 2px; color: #111;">${station.name}</div>
-                  <div style="height: 6px; width: 100%; background-color: #e5e7eb; border-radius: 4px; overflow: hidden;">
-                    <div style="height: 100%; width: ${Math.min((station.fuelQty ?? 0) / 100, 100)}%; ${getColorClass(station.fuelQty ?? 0)};"></div>
-                  </div>
+          <div style="width: 80px; text-align: center; font-family: sans-serif;">
+           <div style="font-size: 24px;">✈️</div>
+                  <div style="font-size: 11px; font-weight: bold; margin-bottom: 2px; color: #111;">${airport.name}</div>
                 </div>
           `
         });
 
-        L.marker([station.latitude, station.longitude], { icon: stationIcon })
+        L.marker([airport.latitude, airport.longitude], { icon: airportIcon })
           .addTo(map)
-          .bindPopup(`<strong>${station.name}</strong>`);
+          .bindPopup(`<strong>${airport.name}</strong>`);
       });
     });
 }
 function showTruckDetails(id) {
-  fetch(`${API_BASE}/api/fleet/${id}`)
+  fetch(`${API_BASE}/api/truck/${id}`)
     .then(res => res.json())
     .then(truck => {
       const modal = new Modal(document.getElementById("truckModal"));

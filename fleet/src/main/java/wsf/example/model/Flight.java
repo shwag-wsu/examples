@@ -2,7 +2,7 @@ package wsf.example.model;
 
 import java.time.LocalDateTime;
 
-
+import jakarta.persistence.*;
 
 @Entity
 public class Flight {
@@ -18,7 +18,8 @@ public class Flight {
     private Airport airport;
 
     @OneToOne
-    private FuelTruck assignedTruck;
+    @JoinColumn(name = "assigned_flight_id", unique = false) 
+    private Truck assignedTruck;
 
     // Getters and setters
 }
