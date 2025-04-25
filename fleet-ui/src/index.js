@@ -116,7 +116,23 @@ function fetchAndRenderStations() {
 
         L.marker([airport.latitude, airport.longitude], { icon: airportIcon })
           .addTo(map)
-          .bindPopup(`<strong>${airport.name}</strong>`);
+          .bindPopup(`<h5>${airport.name}</h5> <br /><strong>${airport.iataCode}</strong><br /><table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@mdo</td>
+    </tr>
+    </tbody></table>`);
       });
     });
 }

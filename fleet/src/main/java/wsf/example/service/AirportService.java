@@ -23,7 +23,9 @@ public class AirportService {
     public Optional<Airport> getAirportById(Long id) {
         return airportRepository.findById(id);
     }
-
+    public Optional<Airport> findByIataCode(String code) {
+        return airportRepository.findByIataCode(code);
+    }
     public Airport saveAirport(Airport airport) {
         return airportRepository.save(airport);
     }

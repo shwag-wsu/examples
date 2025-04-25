@@ -22,4 +22,48 @@ public class Flight {
     private Truck assignedTruck;
 
     // Getters and setters
+    public Truck getAssignedTruck() {
+        return assignedTruck;
+    }
+    public String getFlightNumber() {
+        return flightNumber;
+    }
+    
+    public String getAirline() {
+        return airline;
+    }
+    
+    public LocalDateTime getArrivalTime() {
+        return arrivalTime;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public Airport getAirport() {
+        return airport;
+    }
+    
+    public void setAssignedTruck(Truck assignedTruck) {
+        this.assignedTruck = assignedTruck;
+    }
+    
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setFlightNumber(String flightNumber) {
+        this.flightNumber =flightNumber;
+        
+    }
+
+    public void setAirline(String airline) {
+        this.airline = airline;
+    }
+
+    public void setArrivalTime(LocalDateTime arrivalTime) {
+        this.arrivalTime = arrivalTime;
+    }
+    public void setAirport(Airport airport) {
+        this.airport = airport;
+    }
 }
