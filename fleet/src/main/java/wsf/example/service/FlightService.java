@@ -14,10 +14,12 @@ public class FlightService {
 
     private final FlightRepository flightRepo;
     private final TruckRepository truckRepo;
+    private final FleetService fleetService;
 
-    public FlightService(FlightRepository flightRepo, TruckRepository truckRepo) {
+    public FlightService(FlightRepository flightRepo, TruckRepository truckRepo, FleetService fleetService) {
         this.flightRepo = flightRepo;
         this.truckRepo = truckRepo;
+        this.fleetService = fleetService;
     }
 
     public List<Flight> getAllFlights() {
@@ -35,20 +37,31 @@ public class FlightService {
     public void deleteFlight(Long id) {
         flightRepo.deleteById(id);
     }
+    public List<Flight> getFlightsByAirport(Long airportId) {
+        return flightRepo.findByAirport_Id(airportId);
+    }
 
     public Flight assignTruckToFlight(Long flightId, Long truckId) {
-        Flight flight = flightRepo.findById(flightId)
-            .orElseThrow(() -> new RuntimeException("Flight not found"));
-        Truck truck = truckRepo.findById(truckId)
-            .orElseThrow(() -> new RuntimeException("Truck not found"));
+    Flight flight = flightRepo.findById(flightId)
+        .orElseThrow(() -> new RuntimeException("Flight not found"));
+    Truck truck = truckRepo.findById(truckId)
+        .orElseThrow(() -> new RuntimeException("Truck not found"));
 
-        flight.setAssignedTruck(truck);
-        flight.setStatus("ASSIGNED");
+    flight.setAssignedTruck(truck);
+    flight.setStatus("ASSIGNED");
 
-        truck.setAssignedFlight(flight);
-        truck.setStatus(Truck.TruckStatus.ASSIGNED);
+    truck.setAssignedFlight(flight);
+    truck.setStatus(Truck.TruckStatus.ASSIGNED);
 
-        truckRepo.save(truck);
-        return flightRepo.save(flight);
+    truckRepo.save(truck);
+    Flight savedFlight = flightRepo.save(flight);
+
+    // ✅ Update the in-memory truck map
+    fleetService.updateTruck(truck);
+
+    // ✨ Immediately broadcast updated trucks to all connected clients
+    fleetService.broadcastTrucks(truckRepo.findAll());
+
+    return savedFlight;
     }
 }

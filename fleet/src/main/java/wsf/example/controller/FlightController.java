@@ -11,6 +11,7 @@ import wsf.example.service.FlightService;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/flights")
 @CrossOrigin
@@ -46,7 +47,12 @@ public class FlightController {
     public Flight getFlight(@PathVariable Long id) {
         return flightService.getFlightById(id).orElseThrow(() -> new RuntimeException("Flight not found"));
     }
-
+    
+    @GetMapping("/airport/{id}")
+    public List<Flight> getFlightsByAirport(@PathVariable Long id) {
+    return flightService.getFlightsByAirport(id);
+    }
+    
     @PostMapping
     public Flight createFlight(@RequestBody Flight flight) {
         return flightService.createFlight(flight);

@@ -2,6 +2,8 @@ package wsf.example.model;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -18,10 +20,16 @@ public class Flight {
     private Airport airport;
 
     @OneToOne
-    @JoinColumn(name = "assigned_flight_id", unique = false) 
+    //@JoinColumn(name = "assigned_flight_id", unique = false) 
+    @JoinColumn(name = "assigned_truck_id", unique = false)
+    @JsonBackReference
     private Truck assignedTruck;
 
     // Getters and setters
+    public Long getId() {
+        return id;
+    }
+
     public Truck getAssignedTruck() {
         return assignedTruck;
     }

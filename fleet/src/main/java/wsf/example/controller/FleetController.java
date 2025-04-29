@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/fleet")
@@ -22,18 +23,14 @@ public class FleetController {
     public SseEmitter streamTrucks() {
         return service.registerEmitter();
     }
-    //@GetMapping
-    //public List<Truck> getAllTrucks() {
-     //   return service.getAllTrucks();
-    //}
-
-   // @GetMapping("/{id}")
-   // public Truck getTruck(@PathVariable Long id) {
-    //    return service.getTruckById(id).orElseThrow(() -> new RuntimeException("Truck not found"));
-   // }
-  //  @GetMapping("/stations")
-  //  public List<Station> getStations() {
-   //     return service.getAllStations();
-   // }
+    @PostMapping("/truck/{id}/message")
+    public void sendMessageToTruck(@PathVariable Long id, @RequestBody Map<String, String> payload) {
+        String message = payload.get("message");
+        service.broadcastTruckMessage(id, message);
+    }
+    @GetMapping("/stream/flights")
+        public SseEmitter streamFlights() {
+        return service.registerFlightEmitter();
+    }
    
 }

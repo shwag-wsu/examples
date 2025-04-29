@@ -7,15 +7,43 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-pIVwKqN8...HASH_TRUNCATED..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script defer src="bundle.js"></script></head>
 <body class="p-2">
+  
   <div class="container-fluid">
     <nav class="navbar bg-body-tertiary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Fuel Tracker</a>
+        <a class="navbar-brand" href="#">Fleet-App</a>
+      
+      <div class="d-flex align-items-center ms-auto">
+        <div class="dropdown">
+          <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-regular fa-user"></i>
+            <span class="ms-2" id="userName">Username</span> <!-- Replace 'Username' dynamically -->
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</button></li>
+            <!-- Add more menu items if needed -->
+          </ul>
+        </div>
       </div>
-
+    </div>
     </nav>
     <div id="map"></div>
   </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Profile Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="profileDetails"></div>
+    </div>
+  </div>
+</div>
 
   <!-- Modal -->
   <div class="modal fade" id="truckModal" tabindex="-1" aria-hidden="true">
@@ -52,5 +80,18 @@
       <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
     </div><div class="modal-body">Chat UI here...</div></div></div>
   </div>
+
+  <!-- Airport Modal -->
+<div class="modal fade" id="airportModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <i class="fa-solid fa-plane"></i> <h5 class="modal-title" id="airportTitle">Airport Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="airportDetails"></div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

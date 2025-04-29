@@ -14,7 +14,9 @@ let alertCount = 0;
 let chatCount = 0;
 
 // Your original map.js logic here, e.g.:
-const map = L.map('map').setView([25.774, -80.19], 10);
+//const map = L.map('map').setView([25.774, -80.19], 10);
+const map = L.map('map').setView([39.8283, -98.5795], 4);
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '© OpenStreetMap contributors'
 }).addTo(map);
@@ -27,30 +29,40 @@ const getColorClass = (qty) => {
   if (qty < 6000) return 'background-color:#F59E0B'; // orange
   return 'background-color:#22C55E'; // green
 };
-
-
-
-/*
-function CreateStationButton(station) {
-const CustomButtonControl = L.Control.extend({
-  onAdd: function () {
-    const container = L.DomUtil.create('div');
-    container.className = 'leaflet-bar leaflet-control bg-white shadow-sm p-1';
-    
-    const button = L.DomUtil.create('button', 'btn btn-sm btn-primary', container);
-    button.innerHTML = station.name;
-
-    L.DomEvent.on(button, 'click', function (e) {
-      e.stopPropagation();
-      map.setView([station.latitude, station.longitude], 10); // Set your default view here
-    });
-
-    return container;
-  }
-});
-map.addControl(new CustomButtonControl({ position: 'topright' }));
+//  Thank you CHATGPT
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Radius of the earth in km
+  const dLat = (lat2-lat1) * Math.PI/180;
+  const dLon = (lon2-lon1) * Math.PI/180;
+  const a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  const distanceKm = R * c; // Distance in km
+  return distanceKm;
 }
-*/
+function buildTruckPopup(truck) {
+  return `
+    <div style="text-align:center; font-family:sans-serif;">
+      <h6>${truck.driverName}</h6>
+      <p><strong>Status:</strong> 
+        <span class="badge ${truck.status === 'AVAILABLE' ? 'bg-success' : 'bg-warning'}">
+          ${truck.status}
+        </span>
+      </p>
+      <p><strong>Fuel:</strong> ${truck.fuelQty} L</p>
+      <p><strong>ETA:</strong> ${truck.etaMinutes} min</p>
+      ${truck.assignedFlight ? `
+        <hr/>
+        <p><strong>Assigned Flight:</strong> ${truck.assignedFlight.flightNumber}</p>
+        <p><strong>Airline:</strong> ${truck.assignedFlight.airline}</p>
+      ` : ''}
+    </div>
+  `;
+}
+
 function truckIcon(truck) {
 
 return L.divIcon({
@@ -81,8 +93,8 @@ function fetchAndRenderTrucks() {
         } else {
           const marker = L.marker([latitude, longitude],{ icon: truckIcon(truck)})
             .addTo(map)
-            .bindPopup(`${driverName}`)
-            .on("click", () => showTruckDetails(id));
+            .bindPopup(buildTruckPopup(truck))
+           // .on("click", () => showTruckDetails(id));
           markers[id] = marker;
         }
       });
@@ -93,11 +105,98 @@ function fetchAndRenderTrucks() {
 
 //L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);
 
+function showAirportDetails(airportId) {
+  fetch(`${API_BASE}/api/airports/${airportId}`)
+    .then(res => res.json())
+    .then(airport => {
+      // Fetch flights
+      fetch(`${API_BASE}/api/flights/airport/${airportId}`)
+        .then(res => res.json())
+        .then(flights => {
 
+          // Fetch trucks
+          fetch(`${API_BASE}/api/trucks`)
+            .then(res => res.json())
+            .then(trucks => {
+              const nearbyTrucks = trucks.filter(truck => 
+                getDistanceFromLatLonInKm(
+                  airport.latitude, airport.longitude,
+                  truck.latitude, truck.longitude
+                ) < 5 // within 5 km (~3 miles)
+              );
 
+              const modal = new Modal(document.getElementById("airportModal"));
 
+              let flightList = flights.map(f => `
+                <tr>
+                  <td>${f.flightNumber}</td>
+                  <td>${f.airline}</td>
+                  <td><span class="badge ${f.status === 'scheduled' ? 'bg-success' : 'bg-danger'}">${f.status}</span></td>
+                  <td>${f.arrivalTime}</td>
+                  
+                </tr>
+              `).join("");
 
-function fetchAndRenderStations() {
+              let truckList = nearbyTrucks.map(t => {
+                const distanceKm = getDistanceFromLatLonInKm(airport.latitude, airport.longitude, t.latitude, t.longitude);
+                const etaMinutes = Math.round((distanceKm / 50) * 60);
+
+                return `
+                  <tr>
+                    <td>${t.driverName}</td>
+                    <td>${t.status}</td>
+                    <td>${Math.round(distanceKm)} km (${etaMinutes} min)</td>
+                    <td><button class="btn btn-sm btn-primary" onclick="assignFlightToTruck(${t.id}, '${airport.id}')">Assign Flight</button></td>
+                  </tr>
+                `;
+              }).join("");
+
+              const details = `
+                <h6>Arrivals</h6>
+                <table class="table table-sm">
+                  <thead><tr><th>Flight</th><th>Airline</th><th>Status</th><th>Arrival</th><th>Action</th></tr></thead>
+                  <tbody>${flightList}</tbody>
+                </table>
+                <hr/>
+                <h6>Nearby Trucks</h6>
+                <table class="table table-sm">
+                  <thead><tr><th>Driver</th><th>Status</th><th>Distance</th></tr></thead>
+                  <tbody>${truckList}</tbody>
+                </table>
+              `;
+              document.getElementById("airportTitle").innerHTML = `(${airport.iataCode}) ${airport.name}`;
+              document.getElementById("airportDetails").innerHTML = details;
+              modal.show();
+            });
+        });
+    });
+}
+function assignFlightToTruck(truckId, airportId) {
+  fetch(`${API_BASE}/api/flights/airport/${airportId}`)
+    .then(res => res.json())
+    .then(flights => {
+      const availableFlights = flights.filter(f => f.status != 'ASSIGNED');
+
+      if (availableFlights.length === 0) {
+        alert("No available flights to assign.");
+        return;
+      }
+
+      // Pick the soonest arriving unassigned flight
+      availableFlights.sort((a, b) => new Date(a.arrivalTime) - new Date(b.arrivalTime));
+      const flightToAssign = availableFlights[0];
+
+      fetch(`${API_BASE}/api/flights/${flightToAssign.id}/assign-truck/${truckId}`, {
+        method: 'POST'
+      })
+      .then(() => {
+        alert(`Truck ${truckId} assigned to flight ${flightToAssign.flightNumber}`);
+        // Optional: Refresh modal
+      });
+    });
+}
+
+function fetchAndRenderAirports() {
   fetch(API_BASE +"/api/airports")
     .then(res => res.json())
     .then(airports => {
@@ -109,33 +208,22 @@ function fetchAndRenderStations() {
           html: `
           <div style="width: 80px; text-align: center; font-family: sans-serif;">
            <div style="font-size: 24px;">✈️</div>
-                  <div style="font-size: 11px; font-weight: bold; margin-bottom: 2px; color: #111;">${airport.name}</div>
+                  <div style="font-size: 11px; font-weight: bold; margin-bottom: 2px; color: #111;">(${airport.iataCode}) ${airport.name}</div>
                 </div>
           `
         });
 
         L.marker([airport.latitude, airport.longitude], { icon: airportIcon })
           .addTo(map)
-          .bindPopup(`<h5>${airport.name}</h5> <br /><strong>${airport.iataCode}</strong><br /><table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    </tbody></table>`);
+          .on("dblclick", () => showAirportDetails(airport.id));
+          //.bindPopup(` <div style="text-align: center;">
+    //<p><strong>(${airport.iataCode}) ${airport.name}</strong></p>
+   // <button class="btn btn-primary btn-sm" onclick="showAirportDetails('${airport.id}')">View Details</button>
+  //</div>`);
       });
     });
 }
+/*
 function showTruckDetails(id) {
   fetch(`${API_BASE}/api/truck/${id}`)
     .then(res => res.json())
@@ -153,7 +241,7 @@ function showTruckDetails(id) {
       document.getElementById("truckDetails").innerHTML = details;
       modal.show();
     });
-}
+}*/
 // Replace polling with SSE
 function setupSSE() {
   const eventSource = new EventSource(API_BASE +"/api/fleet/stream");
@@ -168,8 +256,8 @@ function setupSSE() {
       } else {
         const marker = L.marker([latitude, longitude])
           .addTo(map)
-          .bindPopup(`${driverName}`)
-          .on("click", () => showTruckDetails(id));
+          .bindPopup(buildTruckPopup(truck))
+         //.on("click", () => showTruckDetails(id));
         markers[id] = marker;
       }
     });
@@ -193,17 +281,14 @@ function updateBadge(id, count) {
   }
 function handleButtonClick(id) {
     switch(id) {
-      case 'stationsBtn':
-        map.setView([25.774, -80.19], 10); // Example zoom to station region
-        break;
       case 'dashboardBtn':
         new Modal(document.getElementById('dashboardModal')).show();
         break;
       case 'alertsBtn':
         new Modal(document.getElementById('alertsModal')).show();
         break;
-      case 'chatBtn':
-        new Modal(document.getElementById('chatModal')).show();
+      case 'resetBtn':
+        map.setView([39.8283, -98.5795], 4); // USA center
         break;
     }
   }
@@ -217,24 +302,40 @@ const CustomPanelControl = L.Control.extend({
     const dropdown = L.DomUtil.create('div', 'dropdown', container);
     dropdown.innerHTML = `
     <div class="btn-group dropend">
-      <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        <i class="fas fa-gas-pump"></i>
-      </button>
-      <ul class="dropdown-menu" id="stationsDropdown">
-        <!-- Stations will be dynamically added here -->
-        <li><a href="">Station1</a></li>
-        <li><a href="">Station2</a></li>
-      </ul>
-      </div>
+          <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-plane-departure"></i> 
+          </button>
+          <ul class="dropdown-menu" id="airportsDropdown">
+            <!-- Airports will be dynamically added here -->
+          </ul>
+        </div>
     `;
+
+    // Fetch airports and populate the dropdown
+    fetch(`${API_BASE}/api/airports`)
+    .then(res => res.json())
+    .then(airports => {
+      const airportsDropdown = dropdown.querySelector("#airportsDropdown");
+
+      airports.forEach(airport => {
+        const item = document.createElement("li");
+        item.innerHTML = `<a class="dropdown-item text-primary fw-bold" href="#">(${airport.iataCode}) ${airport.name}</a>`;
+        item.querySelector('a').onclick = (e) => {
+          e.preventDefault();
+          map.setView([airport.latitude, airport.longitude], 10);
+        };
+        airportsDropdown.appendChild(item);
+      });
+      
+    });
 
     // Prevent map from closing dropdown
     L.DomEvent.disableClickPropagation(dropdown);
 
       const buttons = [
+        { icon: '<i class="fa-solid fa-arrows-rotate"></i>', title: 'Reset', id: 'resetBtn' },
         { icon: '<i class="fas fa-chart-bar"></i>', title: 'Dashboard', id: 'dashboardBtn' },
-        { icon: '<i class="fas fa-exclamation-triangle"></i>', title: 'Alerts', id: 'alertsBtn' },
-        { icon: '<i class="fas fa-comments"></i>', title: 'Chat', id: 'chatBtn' },
+        { icon: '<i class="fas fa-exclamation-triangle"></i>', title: 'Alerts', id: 'alertsBtn' }
       ];
       buttons.forEach(btn => {
         const el = L.DomUtil.create('button', 'btn btn-sm btn-outline-primary position-relative', container);
@@ -263,10 +364,6 @@ const CustomPanelControl = L.Control.extend({
 map.addControl(new CustomPanelControl({ position: 'topleft' }));
 }
 
-document.getElementById('chatModal').addEventListener('hidden.bs.modal', () => {
-    chatCount = 0;
-    updateBadge('chatBtn', 0);
-  });
   
   document.getElementById('alertsModal').addEventListener('hidden.bs.modal', () => {
     alertCount=0;
@@ -275,9 +372,10 @@ document.getElementById('chatModal').addEventListener('hidden.bs.modal', () => {
 // Initial load + polling
 CreateToolbar();
 fetchAndRenderTrucks();
-fetchAndRenderStations();
+fetchAndRenderAirports();
 setupSSE(); 
-
+window.showAirportDetails = showAirportDetails;
+window.assignFlightToTruck = assignFlightToTruck;
 
 //setInterval(() => {
   // Simulate an alert

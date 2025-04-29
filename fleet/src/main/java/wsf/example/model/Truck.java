@@ -3,6 +3,8 @@ package wsf.example.model;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Truck {
 
@@ -24,7 +26,8 @@ public class Truck {
     @Enumerated(EnumType.STRING)
     private TruckStatus status;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
+    @JsonManagedReference
     private Flight assignedFlight;
 
     public enum TruckStatus {

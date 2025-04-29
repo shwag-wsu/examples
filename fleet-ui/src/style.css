@@ -2,3 +2,10 @@
     height: 90vh;
     width: 100%;
   }
+  .dropdown-menu {
+    min-width: 300px;
+  }
+  .btn-sm {
+    width: 30px;
+    height: 30px;
+  }

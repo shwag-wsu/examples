@@ -1,4 +1,4 @@
-name: Build and upload binary artifact to S3
+name: Build and Upload Image
 
 on: push
 
@@ -28,6 +28,22 @@ jobs:
         aws-region: ${{ secrets.AWS_REGION }} # e.g., us-east-1
     - name: Upload to S3
       run: aws s3 cp ./fleet/target/fleet-fleet-demo.jar ${{ secrets.S3_BUCKET }}
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+      
+    - name: Build and push the tagged docker image to Amazon ECR
+      working-directory: ./fleet 
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{secrets.AWS_ECR_REPO}}
+        IMAGE_TAG: latest
+      run: |
+        docker build -t examples/fleet:$IMAGE_TAG .
+        docker tag examples/fleet:$IMAGE_TAG 095808645442.dkr.ecr.us-east-1.amazonaws.com/examples/fleet:$IMAGE_TAG
+        docker push 095808645442.dkr.ecr.us-east-1.amazonaws.com/examples/fleet:$IMAGE_TAG
+        
 
           #  --recursive: Uploads directories recursively
           #  --exclude "*" : Exclude all files by default
