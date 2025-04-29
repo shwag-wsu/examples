@@ -5,6 +5,6 @@ EXPOSE 8080
 
 WORKDIR /app
 
-COPY ./fleet/target/fleet-fleet-demo.jar fleet-app.jar
+COPY ./target/fleet-fleet-demo.jar fleet-app.jar
 
 CMD ["java", "-jar", "fleet-app.jar"]
