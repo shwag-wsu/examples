@@ -2,6 +2,14 @@ import { map } from './map.js';
 import { Modal } from 'bootstrap';
 import { showDashboard } from './modalService.js';
 
+
+export function UpdateNavbar() {
+//document.getElementById('dashboard').onclick(() => showDashboard());
+
+}
+
+
+
 export function CreateToolbar() {
   const CustomPanelControl = L.Control.extend({
     onAdd: function () {

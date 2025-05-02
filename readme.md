@@ -1,15 +1,30 @@
-# 🚛 Fleet Management Backend
 
-A Spring Boot application that provides RESTful APIs and real-time Server-Sent Events (SSE) for managing a fleet of trucks and fuel stations across various states.
+
+
+# Simiple Fleet Management App
+
+
+##  Use Case
+Create a simiple modern application using Java to act as a fleet management applicaiton the application should
+
+- Display a couple airports with updated arrival flights. 
+- Similuate the the movement of trucks and airplanes at the airport 
+- Be able to assign trucks to flights for refueling
+
+##  Solution
+
+A Spring Boot application that provides RESTful APIs and real-time Server-Sent Events (SSE) for managing a fleet of trucks and airports with fligh arrivals across various states.
 
 ---
 
 ## 📋 Table of Contents
 
+- [Front End UI]
+- [Backend ]
+- [ServerLess]
 - [Features](#features)
 - [Getting Started](#getting-started)
 - [API Endpoints](#api-endpoints)
-- [Real-Time Alerts](#real-time-alerts)
 - [Deployment](#deployment)
 - [Contributing](#contributing)
 - [License](#license)
@@ -19,12 +34,13 @@ A Spring Boot application that provides RESTful APIs and real-time Server-Sent E
 ## ✨ Features
 
 - **Fleet Management**: Monitor a fleet of trucks in real time.
-- **Station Management**: Track fuel depots across various states.
+- **Airport Management**: Track Airport arrivals across various states.
 - **Real-Time Alerts**: Receive live alerts via Server-Sent Events (SSE).
-- **RESTful APIs**: Clean, structured REST endpoints.
 - **Modular Architecture**: Organized services, models, and controllers.
 
 ---
+
+
 
 ## 🚀 Getting Started
 
@@ -60,10 +76,11 @@ A Spring Boot application that provides RESTful APIs and real-time Server-Sent E
 The server runs at http://localhost:8080.
 
 
-## 🔔 Real-Time Alerts
+## 🔔 Real-Time Alerts, Truck and Flight updates
 Subscribe to alerts using Server-Sent Events (SSE):
 
 SSE Endpoint
+GET /api/alerts/stream
 GET /api/alerts/stream
 
 <pre>
@@ -77,6 +94,9 @@ eventSource.addEventListener("alert", (e) => {
 
 
 ## 🚀 Deployment
+
+
+
 ### Environment Variables
 
 SERVER_PORT — Port for the app (default: 8080)

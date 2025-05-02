@@ -1,8 +1,12 @@
 package wsf.example.simulator;
 import wsf.example.model.Truck;
+import wsf.example.model.Flight;
 import wsf.example.model.FuelTruck;
 import wsf.example.model.Station;
+
+import wsf.example.service.AlertService;
 import wsf.example.service.FleetService;
+import wsf.example.service.FlightService;
 import wsf.example.service.TruckService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -13,14 +17,19 @@ import java.util.List;
 import java.util.Random;
 
 @Component
-public class TruckSimulator {
+public class Simulator {
     private final FleetService fleetService;
     private final TruckService truckService;
+    private final AlertService alertService;
+    private final FlightService flightService;
+
     private final Random rand = new Random();
 
-    public TruckSimulator(FleetService fleetService,TruckService truckService) {
+    public Simulator(FleetService fleetService,TruckService truckService,AlertService alertService,FlightService flightService) {
         this.fleetService = fleetService;
         this.truckService = truckService;
+        this.alertService = alertService;
+        this.flightService = flightService;
     }
 
     @PostConstruct
@@ -32,6 +41,8 @@ public class TruckSimulator {
       //  new Station("station-04", "Depot Orlando", 28.5383, -81.3792,1000)
     //));
     List<Truck> trucks = truckService.getAllTrucks();
+    List<Flight> flights = flightService.getAllFlights();
+    
     //List<FuelTruck> trucks = List.of(
      //   new FuelTruck("truck-001", "Alice", 25.77, -80.19, 8000, "Depot Miami", 12, List.of("ORD001", "ORD002")),
      //   new FuelTruck("truck-002", "Bob", 25.78, -80.18, 6000, "Depot Fort Lauderdale", 10, List.of("ORD003")),
@@ -46,10 +57,13 @@ public class TruckSimulator {
     //);
 
     fleetService.preloadTrucks(trucks);
+    fleetService.preloadFlights(flights);
+
     }
 
     @Scheduled(fixedRate = 5000)
     public void simulateMovement() {
+        /*  Truck movement */
         fleetService.getAllTrucks().forEach(truck -> {
             // Add small random offset to simulate movement
             truck.setLatitude(truck.getLatitude() + (rand.nextDouble() - 0.5) * 0.001);
@@ -58,5 +72,16 @@ public class TruckSimulator {
             fleetService.updateTruck(truck);
         });
         fleetService.broadcastTrucks(fleetService.getAllTrucks());
+        /*  Flight Movement */
+        fleetService.getAllFlights().forEach(flight -> {
+            // Add small random offset to simulate movement
+            flight.setLatitude(flight.getLatitude() + (rand.nextDouble() - 0.5) * 0.001);
+            flight.setLongitude(flight.getLongitude() + (rand.nextDouble() - 0.5) * 0.001);
+
+            fleetService.updateFlight(flight);
+        });
+        fleetService.broadcastFlights(fleetService.getAllFlights());
+        
     }
+   
 }

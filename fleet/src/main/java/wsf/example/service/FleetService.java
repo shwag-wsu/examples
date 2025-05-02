@@ -13,6 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Service
 public class FleetService {
     private final Map<Long,Truck> trucks = new ConcurrentHashMap<>();
+    private final Map<Long,Flight> flights = new ConcurrentHashMap<>();
     private final List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
     private final List<SseEmitter> flightemitters = new CopyOnWriteArrayList<>();
 
@@ -90,6 +91,22 @@ public class FleetService {
     public void preloadTrucks(List<Truck> list) {
         for (Truck truck : list) {
             trucks.put(truck.getId(), truck);
+        }
+    }
+
+    public List<Flight> getAllFlights() {
+        return new ArrayList<>(flights.values());
+    }
+
+    public Optional<Flight> getFlightById(Long id) {
+        return Optional.ofNullable(flights.get(id));
+    }
+    public void updateFlight(Flight flight) {
+        flights.put(flight.getId(), flight);
+    }
+    public void preloadFlights(List<Flight> list) {
+        for (Flight flight : list) {
+            flights.put(flight.getId(), flight);
         }
     }
 }

@@ -69,18 +69,21 @@ export function showAirportDetails(airportId) {
                 </table>
               `;
 
-              const airportModalEl = document.getElementById('airportModal');
-              const airportModal = bootstrap.Modal.getInstance(airportModalEl);
-              if (!airportModal) {
+              //const airportModalEl = document.getElementById('airportModal');
+              //const airportModal = Modal.getInstance(airportModalEl);
+              //if (!airportModal) {
                 // Only show the modal if not already open
-                new Modal(airportModalEl).show();
-              }
-              //new Modal(document.getElementById("airportModal")).show();
+                //new Modal(airportModalEl).show();
+                //airportModal = new Modal(airportModalEl)
+              //}
+              new Modal(document.getElementById("airportModal")).show();
             });
         });
     });
 }
 
+
+/*
 export function showDashboard() {
   Promise.all([
     fetch('/api/trucks').then(res => res.json()),
@@ -99,6 +102,85 @@ export function showDashboard() {
     const dashboardModalEl = document.getElementById('dashboardModal');
     new Modal(dashboardModalEl).show();
 
+  });
+}
+*/
+function renderTruckChart(available, assigned, lowFuel) {
+  const ctx = document.getElementById('truckChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Available', 'Assigned', 'Low Fuel'],
+      datasets: [{
+        label: 'Truck Metrics',
+        data: [available, assigned, lowFuel],
+        backgroundColor: ['#198754', '#ffc107', '#dc3545'],
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: { enabled: true }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: { display: true, text: 'Truck Count' }
+        }
+      }
+    }
+  });
+}
+export function showDashboard() {
+  Promise.all([
+    fetch('/api/trucks').then(res => res.json()),
+    fetch('/api/airports').then(res => res.json())
+  ]).then(([trucks, airports]) => {
+
+    // Calculate metrics
+    const available = trucks.filter(t => t.status === 'AVAILABLE').length;
+    const assigned = trucks.filter(t => t.status === 'ASSIGNED').length;
+    const lowFuel = trucks.filter(t => t.fuelQty < 3000).length;
+    const avgEta = trucks.length > 0
+      ? Math.round(trucks.reduce((sum, t) => sum + (t.etaMinutes || 0), 0) / trucks.length)
+      : 0;
+
+    const dashboardContent = document.getElementById('dashboardContent');
+    dashboardContent.innerHTML = `
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <h6>Fleet Overview</h6>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Total Trucks: <strong>${trucks.length}</strong></li>
+              <li class="list-group-item">Available: <strong>${available}</strong></li>
+              <li class="list-group-item">Assigned: <strong>${assigned}</strong></li>
+              <li class="list-group-item">Low Fuel (< 3000L): <strong>${lowFuel}</strong></li>
+              <li class="list-group-item">Average ETA: <strong>${avgEta} min</strong></li>
+            </ul>
+          </div>
+          <div class="col-md-6 mb-3">
+            <h6>Airports</h6>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Total Airports: <strong>${airports.length}</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row mt-3">
+          <div class="col-12">
+            <h6>Performance Chart</h6>
+            <canvas id="truckChart" height="100"></canvas>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const dashboardModalEl = document.getElementById('dashboardModal');
+    new Modal(dashboardModalEl).show();
+
+    renderTruckChart(available, assigned, lowFuel);
   });
 }
 

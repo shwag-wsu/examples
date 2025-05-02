@@ -14,6 +14,9 @@ public class Flight {
     private String flightNumber;
     private String airline;
     private String status;
+    private double latitude;
+    private double longitude;
+    private String registration;
     private LocalDateTime arrivalTime;
 
     @ManyToOne
@@ -50,10 +53,17 @@ public class Flight {
     public Airport getAirport() {
         return airport;
     }
-    
+    public String getRegistration() { return registration; }
+
+    public double getLatitude() { return latitude; }
+    public double getLongitude() { return longitude; }
+
     public void setAssignedTruck(Truck assignedTruck) {
         this.assignedTruck = assignedTruck;
     }
+    public void setLatitude(double latitude) { this.latitude = latitude; }
+    public void setLongitude(double longitude) { this.longitude = longitude; }
+    public void setRegistration(String registration) { this.registration = registration; }
     
     public void setStatus(String status) {
         this.status = status;

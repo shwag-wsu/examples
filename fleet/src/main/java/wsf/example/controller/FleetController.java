@@ -19,7 +19,7 @@ public class FleetController {
     public FleetController(FleetService service) {
         this.service = service;
     }
-    @GetMapping("/stream")
+    @GetMapping("/trucks/stream")
     public SseEmitter streamTrucks() {
         return service.registerEmitter();
     }
@@ -28,7 +28,7 @@ public class FleetController {
         String message = payload.get("message");
         service.broadcastTruckMessage(id, message);
     }
-    @GetMapping("/stream/flights")
+    @GetMapping("/flights/stream")
         public SseEmitter streamFlights() {
         return service.registerFlightEmitter();
     }

@@ -19,7 +19,7 @@ A Spring Boot application that provides RESTful APIs and real-time Server-Sent E
 ## ✨ Features
 
 - **Fleet Management**: Monitor a fleet of trucks in real time.
-- **Station Management**: Track fuel depots across various states.
+- **Airport Management**: Track fuel depots across various states.
 - **Real-Time Alerts**: Receive live alerts via Server-Sent Events (SSE).
 - **RESTful APIs**: Clean, structured REST endpoints.
 - **Modular Architecture**: Organized services, models, and controllers.

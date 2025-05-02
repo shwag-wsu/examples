@@ -16,7 +16,7 @@ export function fetchAndRenderAirports() {
           className: '',
           html: `
             <div style="width: 80px; text-align: center; font-family: sans-serif;">
-              <div style="font-size: 30px;">✈️</div>
+            <div style="font-size: 28px;"><i class="fa-solid fa-tower-observation"></i></div>
               <div style="font-size: 11px; font-weight: bold;">(${airport.iataCode}) ${airport.name}</div>
             </div>
           `

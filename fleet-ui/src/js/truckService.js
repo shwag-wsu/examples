@@ -22,7 +22,7 @@ export function fetchAndRenderTrucks() {
 }
 
 export function setupTruckSSE() {
-  const eventSource = new EventSource('/api/fleet/stream');
+  const eventSource = new EventSource('/api/fleet/trucks/stream');
   eventSource.addEventListener("truck-update", (e) => {
     const trucks = JSON.parse(e.data);
     trucks.forEach(truck => {

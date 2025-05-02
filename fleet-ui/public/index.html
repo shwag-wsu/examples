@@ -5,28 +5,70 @@
   <title>Fuel Tracker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-pIVwKqN8...HASH_TRUNCATED..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="p-2">
   
   <div class="container-fluid">
-    <nav class="navbar bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary px-3">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Fleet-App</a>
-      
-      <div class="d-flex align-items-center ms-auto">
-        <div class="dropdown">
-          <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-regular fa-user"></i>
-            <span class="ms-2" id="userName">Username</span> <!-- Replace 'Username' dynamically -->
+    
+        <div class="ms-auto d-flex align-items-center gap-3">
+    
+          <!-- Airports Dropdown -->
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="airportsMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-tower-observation"></i>
+              <span class="ms-2">Airports</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" id="airportsDropdown" aria-labelledby="airportsMenu"></ul>
+          </div>
+    
+          <!-- Trucks Dropdown 
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="trucksMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-truck"></i>
+              <span class="ms-2">Trucks</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="trucksMenu">
+            </ul>
+          </div> -->
+    
+          <!-- Dashboard -->
+          <a href="#" id="dashboardMenu" class="nav-link d-flex align-items-center">
+            <i class="fas fa-chart-bar"></i>
+            <span class="ms-2">Dashboard</span>
           </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</button></li>
-            <!-- Add more menu items if needed -->
-          </ul>
+    
+    
+          <!-- Refresh -->
+          <a href="#" id="refreshMenu" class="nav-link d-flex align-items-center">
+            <i class="fa-regular fa-map"></i>
+            <span class="ms-2">Map</span>
+          </a>
+    
+          <!-- Alerts -->
+          <a href="#" id="alertsMenu" class="nav-link d-flex align-items-center" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">
+            <i class="fa-regular fa-bell"></i>
+            <span class="ms-2"></span>
+          </a>
+         
+          <!-- User Dropdown -->
+          <div class="dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-regular fa-user"></i>
+              <span class="ms-2" id="userName">Username</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+              <li><button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#profileModal">Profile</button></li>
+            </ul>
+          </div>
+    
         </div>
       </div>
-    </div>
     </nav>
+  
     <div id="map"></div>
   </div>
 
@@ -62,7 +104,7 @@
     <div class="modal-dialog"><div class="modal-content"><div class="modal-header">
       <h5 class="modal-title">Dashboard</h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-    </div><div class="modal-body">Your dashboard content here</div></div></div>
+    </div><div id="dashboardContent" class="modal-body">Your dashboard content here</div></div></div>
   </div>
   
   <!-- Alerts Modal -->
@@ -70,7 +112,7 @@
     <div class="modal-dialog"><div class="modal-content"><div class="modal-header">
       <h5 class="modal-title">Alerts</h5>
       <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-    </div><div class="modal-body">List of alerts...</div></div></div>
+    </div><div class="modal-body" id="alertsList">List of alerts...</div></div></div>
   </div>
   
   <!-- Chat Modal -->
@@ -90,6 +132,19 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body" id="airportDetails"></div>
+    </div>
+  </div>
+</div>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <i class="fa-regular fa-bell"></i>
+      <strong class="me-auto">Bootstrap</strong>
+      <small>11 mins ago</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body" id="live_alert">
+      Hello, world! This is a toast message.
     </div>
   </div>
 </div>

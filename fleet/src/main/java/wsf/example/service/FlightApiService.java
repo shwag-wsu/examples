@@ -17,21 +17,20 @@ import java.util.Map;
 @Service
 public class FlightApiService {
 
-     private static final Logger logger = LoggerFactory.getLogger(FlightApiService.class);
-     
+    private static final Logger logger = LoggerFactory.getLogger(FlightApiService.class);
+
     private final RestTemplate restTemplate = new RestTemplate();
+
     @Value("${aviationstack.api.key}")
     private String API_KEY;
 
-    public List<Flight> fetchArrivals(String airportIataCode,Airport airport) {
-
+    public List<Flight> fetchArrivals(String airportIataCode, Airport airport) {
         String url = String.format("http://api.aviationstack.com/v1/flights?access_key=%s&arr_iata=%s&flight_status=scheduled&limit=10", API_KEY, airportIataCode);
 
         logger.info("Fetching flight arrivals for airport [{}]", airportIataCode);
 
         Map response = restTemplate.getForObject(url, Map.class);
         List<Map<String, Object>> data = (List<Map<String, Object>>) response.get("data");
-
 
         List<Flight> flights = new ArrayList<>();
 
@@ -44,18 +43,28 @@ public class FlightApiService {
             Map<String, Object> flightMap = (Map<String, Object>) entry.get("flight");
             Map<String, Object> airlineMap = (Map<String, Object>) entry.get("airline");
             Map<String, Object> arrivalMap = (Map<String, Object>) entry.get("arrival");
+            Map<String, Object> liveMap = (Map<String, Object>) entry.get("live");
+            Map<String, Object> aircraftMap = (Map<String, Object>) entry.get("aircraft");
 
             String flightNumber = (String) flightMap.get("iata");
             String airline = (String) airlineMap.get("name");
             String status = (String) entry.get("flight_status");
-            String arrivalTimeRaw = (String) arrivalMap.get("scheduled"); // ISO 8601 format
+            String arrivalTimeRaw = (String) arrivalMap.get("scheduled");
+            String registration = aircraftMap != null ? (String) aircraftMap.get("registration") : "N/A";
+            Double latitude = liveMap != null ? (Double) liveMap.get("latitude") : null;
+            Double longitude = liveMap != null ? (Double) liveMap.get("longitude") : null;
 
             if (arrivalTimeRaw == null) {
-                logger.debug("Skipping flight [{}]: no scheduled arrival time [{}] - [{}]", flightNumber,arrivalMap.get("scheduled"),arrivalMap.get("estimated"));
+                logger.debug("Skipping flight [{}]: no scheduled arrival time [{}]", flightNumber, arrivalMap.get("scheduled"));
                 continue;
             }
 
-            LocalDateTime arrivalTime = arrivalTimeRaw != null ? LocalDateTime.parse(arrivalTimeRaw.substring(0, 19)) : null;
+            if (latitude == null || longitude == null) {
+                logger.debug("Skipping flight [{}]: missing live coordinates", flightNumber);
+                continue;
+            }
+
+            LocalDateTime arrivalTime = LocalDateTime.parse(arrivalTimeRaw.substring(0, 19));
 
             Flight flight = new Flight();
             flight.setFlightNumber(flightNumber);
@@ -63,10 +72,14 @@ public class FlightApiService {
             flight.setStatus(status);
             flight.setArrivalTime(arrivalTime);
             flight.setAirport(airport);
-            logger.debug("Fetched flight [{}] arriving at [{}]", flightNumber, arrivalTime);
+            flight.setRegistration(registration);
+            flight.setLatitude(latitude);
+            flight.setLongitude(longitude);
 
+            logger.debug("Fetched flight [{}] arriving at [{}]", flightNumber, arrivalTime);
             flights.add(flight);
         }
+
         logger.info("Fetched [{}] valid flights for airport [{}]", flights.size(), airportIataCode);
         return flights;
     }

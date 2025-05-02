@@ -17,9 +17,10 @@ public class AlertController {
 
     @GetMapping("/stream")
     public SseEmitter stream() {
-        SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
-        alertService.addEmitter(emitter);
-        return emitter;
+        return alertService.registerEmitter();
+     //   SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
+       // alertService.addEmitter(emitter);
+       // return emitter;
     }
 
     
