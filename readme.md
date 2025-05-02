@@ -77,7 +77,7 @@ This option will package the font-end with the backend to run as one jar.
 
 4. **Start up the backend**
 
-   ```bash
+  ```bash
   cd fleet
   mvn install
   mvn spring-boot:run
