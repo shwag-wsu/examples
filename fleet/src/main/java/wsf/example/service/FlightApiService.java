@@ -25,7 +25,8 @@ public class FlightApiService {
     private String API_KEY;
 
     public List<Flight> fetchArrivals(String airportIataCode, Airport airport) {
-        String url = String.format("http://api.aviationstack.com/v1/flights?access_key=%s&arr_iata=%s&flight_status=scheduled&limit=10", API_KEY, airportIataCode);
+
+        String url = String.format("https://api.aviationstack.com/v1/flights?access_key=%s&arr_iata=%s&flight_status=active&limit=10", API_KEY, airportIataCode);
 
         logger.info("Fetching flight arrivals for airport [{}]", airportIataCode);
 

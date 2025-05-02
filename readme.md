@@ -1,124 +1,90 @@
+# 🚀 Examples: Showcasing My Coding Projects
 
-
-
-# Simiple Fleet Management App
-
-
-##  Use Case
-Create a simiple modern application using Java to act as a fleet management applicaiton the application should
-
-- Display a couple airports with updated arrival flights. 
-- Similuate the the movement of trucks and airplanes at the airport 
-- Be able to assign trucks to flights for refueling
-
-##  Solution
-
-A Spring Boot application that provides RESTful APIs and real-time Server-Sent Events (SSE) for managing a fleet of trucks and airports with fligh arrivals across various states.
+Welcome to the **Examples** repository! This collection highlights various coding projects I've developed, demonstrating my skills in full-stack development, system design, and user interface creation. Each project within this repository serves as a testament to my ability to build scalable and efficient applications.
 
 ---
 
-## 📋 Table of Contents
+## 📄 Project Overview
 
-- [Front End UI]
-- [Backend ]
-- [ServerLess]
-- [Features](#features)
-- [Getting Started](#getting-started)
-- [API Endpoints](#api-endpoints)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
+This repository contains a sample full-stack application consisting of a Java-based backend and a modern React-based frontend. It is designed to demonstrate best practices in service-oriented architecture, real-time data flow, and user-centric interfaces.
+
+The project is modular, organized for easy extensibility and maintainability. It includes clear patterns for communication between services, state management, and event-driven updates using Server-Sent Events (SSE).
 
 ---
 
-## ✨ Features
+## 💼 Use Case
 
-- **Fleet Management**: Monitor a fleet of trucks in real time.
-- **Airport Management**: Track Airport arrivals across various states.
-- **Real-Time Alerts**: Receive live alerts via Server-Sent Events (SSE).
-- **Modular Architecture**: Organized services, models, and controllers.
+Imagine a fleet management system where a dispatcher monitors and interacts with real-time vehicle data. This application showcases:
+
+- Real-time updates on vehicle positions or statuses.
+- A responsive UI for managing and tracking fleet resources.
+- Backend logic for handling vehicle states and pushing updates to clients.
+
+  
+This example is ideal for demonstrating how one might build enterprise-ready systems that combine real-time backend services with dynamic frontend dashboards.
 
 ---
 
+## 📁 Repository Structure
 
+- `fleet/`: Backend service handling business logic and data persistence. [fleet](./fleet/)
+- `fleet-ui/`: Frontend application for user interaction with live data.
+
+---
+
+## 🛠️ Technologies Used
+
+### Backend
+- Java 21
+- Spring Boot
+- Maven
+- SQLite
+- Server-Sent Events (SSE)
+
+### Frontend
+- React.js
+- Redux
+- Tailwind CSS
+
+### DevOps & Tooling
+- Docker & Docker Compose
+- Jest & React Testing Library
+
+---
 
 ## 🚀 Getting Started
 
-### Prerequisites
-
-- Java 17 or higher
-- Maven 3.6 or higher
-
-### Installation
+To get a local copy up and running, follow these steps:
 
 1. **Clone the repository**
-
    ```bash
    git clone https://github.com/shwag-wsu/examples.git
    cd examples
 
-2. **Navigate to the backend**
+2. **Set up the frontend**
+   ```bash
+   cd ../fleet-ui
+   npm install
+   npm start
+
+3. **Optional Deploy to backend**
+   ```bash
+   cd ../fleet-ui
+   npm run build
+   mv dist ../fleet/src/main/resources
+
+This option will package the font-end with the backend to run as one jar.
+
+4. **Start up the backend**
 
    ```bash
-   cd fleet-backend
-
-3. **Build the application**
-
-   ```bash
-   mvn clean install
-
-
-4. **Run the server**
-
-   ```bash
-    java -jar target/fleet-backend-0.0.1-SNAPSHOT.jar
-
-The server runs at http://localhost:8080.
-
-
-## 🔔 Real-Time Alerts, Truck and Flight updates
-Subscribe to alerts using Server-Sent Events (SSE):
-
-SSE Endpoint
-GET /api/alerts/stream
-GET /api/alerts/stream
-
-<pre>
-     const eventSource = new EventSource('/api/alerts/stream')
-
-eventSource.addEventListener("alert", (e) => {
-  const alert = JSON.parse(e.data);
-  console.log('New alert:', alert.message);
-})
-</pre>
-
-
-## 🚀 Deployment
-
-
-
-### Environment Variables
-
-SERVER_PORT — Port for the app (default: 8080)
-
-SPRING_PROFILES_ACTIVE — Active Spring profiles
-
-Example (Custom Port)
-
-<pre>
-
-    java -jar target/fleet-backend-0.0.1-SNAPSHOT.jar
-</pre> 
-
+  cd fleet
+  mvn install
+  mvn spring-boot:run
 
 ## 🤝 Contributing
-### Fork the project
+Contributions are welcome! If you have suggestions or improvements, please fork the repository and submit a pull request.
 
-1. **Create** a new branch (git checkout -b feature/new-feature)
+## 📄 License
 
-Commit changes (git commit -am 'Add new feature')
-
-Push to the branch (git push origin feature/new-feature)
-
-Create a Pull Request
-
+This project is licensed under the MIT License.

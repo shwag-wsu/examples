@@ -1,28 +1,59 @@
-# 🚛 Fleet Management Backend
+# ✈️ Fleet Backend Service
 
-A Spring Boot application that provides RESTful APIs and real-time Server-Sent Events (SSE) for managing a fleet of trucks and fuel stations across various states.
-
----
-
-## 📋 Table of Contents
-
-- [Features](#features)
-- [Getting Started](#getting-started)
-- [API Endpoints](#api-endpoints)
-- [Real-Time Alerts](#real-time-alerts)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
+This backend service powers the Fleet Management application, providing RESTful APIs and real-time flight data integration. Built with Java and Spring Boot, it interfaces with the Aviationstack API to deliver up-to-date flight information to clients.
 
 ---
 
-## ✨ Features
+## 📄 Project Overview
 
-- **Fleet Management**: Monitor a fleet of trucks in real time.
-- **Airport Management**: Track fuel depots across various states.
-- **Real-Time Alerts**: Receive live alerts via Server-Sent Events (SSE).
-- **RESTful APIs**: Clean, structured REST endpoints.
-- **Modular Architecture**: Organized services, models, and controllers.
+The Fleet Backend Service is a Spring Boot application designed to handle flight data operations. It fetches real-time flight information from the Aviationstack API and exposes endpoints for frontend consumption. The service includes:
+
+- RESTful APIs for flight data retrieval
+- Integration with Aviationstack for real-time updates
+- Swagger documentation for API exploration
+
+---
+
+## 💼 Use Case
+
+This backend is ideal for applications requiring real-time flight tracking, such as:
+
+- Airline operation dashboards
+- Travel booking platforms
+- Airport information displays
+
+By leveraging Aviationstack, the service provides accurate and timely flight data to enhance user experience.
+
+---
+
+## 🛠️ Technologies Used
+
+- **Language**: Java 21
+- **Framework**: Spring Boot
+- **Build Tool**: Maven
+- **API Documentation**: Swagger (OpenAPI)
+- **External API**: Aviationstack
+- **Database**: SQLite (if applicable)
+- **Access Control**: oauth2
+---
+
+## 📦 Project Structure
+
+fleet/
+├── src/
+│ ├── main/
+│ │ ├── java/
+│ │ │ └── com/
+│ │ │ └── example/
+│ │ │ └── fleet/
+│ │ │ ├── controller/
+│ │ │ ├── service/
+│ │ │ └── model/
+│ │ └── resources/
+│ │ └── application.properties
+├── pom.xml
+└── README.md
+
 
 ---
 
@@ -30,75 +61,58 @@ A Spring Boot application that provides RESTful APIs and real-time Server-Sent E
 
 ### Prerequisites
 
-- Java 17 or higher
-- Maven 3.6 or higher
+- Java 21
+- Maven
+- Aviationstack API key
 
 ### Installation
 
-1. **Clone the repository**
+1. **Clone the repository**:
 
    ```bash
    git clone https://github.com/shwag-wsu/examples.git
-   cd examples
+   cd examples/fleet
 
-2. **Navigate to the backend**
-
+2. **Configure the API key:**
    ```bash
-   cd fleet-backend
-
-3. **Build the application**
-
+   aviationstack.api.key=YOUR_API_KEY
+   
+3. **Configure oauth2:** (Cognito)
+   ```bash
+      spring.security.oauth2.client.registration.cognito.client-id=YOUR_CLIENT_ID
+      spring.security.oauth2.client.registration.cognito.client-secret=YOUR_SECRET_KEY
+      spring.security.oauth2.client.registration.cognito.client-name=Cognito
+      spring.security.oauth2.client.registration.cognito.provider=cognito
+      spring.security.oauth2.client.registration.cognito.scope=openid,email,profile
+      spring.security.oauth2.client.registration.cognito.redirect-uri=http://localhost:8080/login/oauth2/code/cognito
+4. **Build and run the application:**
    ```bash
    mvn clean install
+   mvn spring-boot:run
 
+## 📘 API Documentation
+Swagger UI is available at:
 
-4. **Run the server**
+http://localhost:8080/swagger-ui.html
 
-   ```bash
-    java -jar target/fleet-backend-0.0.1-SNAPSHOT.jar
+This interface allows you to explore and test the available endpoints.
 
-The server runs at http://localhost:8080.
+## 🔌API Endpoints
 
+- `GET /api/flights`: Retrieve a list of current flights.
+- `GET /api/flights/{id}`: Retrieve details for a specific flight.
 
-## 🔔 Real-Time Alerts
-Subscribe to alerts using Server-Sent Events (SSE):
+<i>Note: Additional endpoints may be available as per the Swagger documentation.</i>
 
-SSE Endpoint
-GET /api/alerts/stream
+## 🔄 Real-Time Flight Data
+The service integrates with the Aviationstack API to fetch real-time flight information. This includes:
+- Flight status updates
+- Departure and arrival times
+- Airline and aircraft details
+<i>Ensure your API key has sufficient privileges for the required data.</i>
 
-<pre>
-     const eventSource = new EventSource('/api/alerts/stream')
-
-eventSource.addEventListener("alert", (e) => {
-  const alert = JSON.parse(e.data);
-  console.log('New alert:', alert.message);
-})
-</pre>
-
-
-## 🚀 Deployment
-### Environment Variables
-
-SERVER_PORT — Port for the app (default: 8080)
-
-SPRING_PROFILES_ACTIVE — Active Spring profiles
-
-Example (Custom Port)
-
-<pre>
-
-    java -jar target/fleet-backend-0.0.1-SNAPSHOT.jar
-</pre> 
-
+## 📄 License
+This project is licensed under the MIT License. See the LICENSE file for details.
 
 ## 🤝 Contributing
-### Fork the project
-
-1. **Create** a new branch (git checkout -b feature/new-feature)
-
-Commit changes (git commit -am 'Add new feature')
-
-Push to the branch (git push origin feature/new-feature)
-
-Create a Pull Request
-
+Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
