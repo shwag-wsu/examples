@@ -40,7 +40,7 @@ public class FlightService {
     public List<Flight> getFlightsByAirport(Long airportId) {
         return flightRepo.findByAirport_Id(airportId);
     }
-
+    /* 
     public Flight assignTruckToFlight(Long flightId, Long truckId) {
     Flight flight = flightRepo.findById(flightId)
         .orElseThrow(() -> new RuntimeException("Flight not found"));
@@ -64,4 +64,5 @@ public class FlightService {
 
     return savedFlight;
     }
+    */
 }

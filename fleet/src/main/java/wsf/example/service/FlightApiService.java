@@ -26,7 +26,7 @@ public class FlightApiService {
 
     public List<Flight> fetchArrivals(String airportIataCode, Airport airport) {
 
-        String url = String.format("https://api.aviationstack.com/v1/flights?access_key=%s&arr_iata=%s&flight_status=active&limit=10", API_KEY, airportIataCode);
+        String url = String.format("http://api.aviationstack.com/v1/flights?access_key=%s&arr_iata=%s&flight_status=active&limit=25", API_KEY, airportIataCode);
 
         logger.info("Fetching flight arrivals for airport [{}]", airportIataCode);
 
@@ -49,6 +49,7 @@ public class FlightApiService {
 
             String flightNumber = (String) flightMap.get("iata");
             String airline = (String) airlineMap.get("name");
+            String airline_iata = (String) airlineMap.get("iata");
             String status = (String) entry.get("flight_status");
             String arrivalTimeRaw = (String) arrivalMap.get("scheduled");
             String registration = aircraftMap != null ? (String) aircraftMap.get("registration") : "N/A";
@@ -70,6 +71,7 @@ public class FlightApiService {
             Flight flight = new Flight();
             flight.setFlightNumber(flightNumber);
             flight.setAirline(airline);
+            flight.setAirline_iata(airline_iata);
             flight.setStatus(status);
             flight.setArrivalTime(arrivalTime);
             flight.setAirport(airport);

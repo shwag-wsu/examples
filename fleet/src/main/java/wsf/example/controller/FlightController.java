@@ -57,10 +57,10 @@ public class FlightController {
     public Flight createFlight(@RequestBody Flight flight) {
         return flightService.createFlight(flight);
     }
-
+    /* 
     @PostMapping("/{flightId}/assign-truck/{truckId}")
     public Flight assignTruck(@PathVariable Long flightId, @PathVariable Long truckId) {
         return flightService.assignTruckToFlight(flightId, truckId);
-    }
+    }*/
     
 }

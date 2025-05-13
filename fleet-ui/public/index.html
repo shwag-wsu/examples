@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-pIVwKqN8...HASH_TRUNCATED..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="p-2">
+<body>
   
   <div class="container-fluid">
     <nav class="navbar navbar-expand-lg bg-body-tertiary px-3">
@@ -48,11 +48,19 @@
             <span class="ms-2">Map</span>
           </a>
     
-          <!-- Alerts -->
-          <a href="#" id="alertsMenu" class="nav-link d-flex align-items-center" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-title="Popover title" data-bs-content="And here's some amazing content. It's very engaging. Right?">
-            <i class="fa-regular fa-bell"></i>
-            <span class="ms-2"></span>
-          </a>
+<!-- Alerts -->
+<a href="#" id="alertsMenu" class="nav-link d-flex align-items-center position-relative" role="button">
+  <i class="fa-regular fa-bell"></i>
+  <span class="ms-2">Alerts</span>
+  <span id="alertBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">0</span>
+</a>
+<div id="alertPopover" class="popover fade show bs-popover-bottom d-none" style="position: absolute; z-index: 9999;">
+  <div class="popover-arrow"></div>
+  <div class="popover-body p-2" style="max-height: 250px; overflow-y: auto;" id="alertsListPopover">
+    <!-- alerts injected here -->
+  </div>
+</div>
+
          
           <!-- User Dropdown -->
           <div class="dropdown">
@@ -107,13 +115,7 @@
     </div><div id="dashboardContent" class="modal-body">Your dashboard content here</div></div></div>
   </div>
   
-  <!-- Alerts Modal -->
-  <div class="modal fade" id="alertsModal" tabindex="-1">
-    <div class="modal-dialog"><div class="modal-content"><div class="modal-header">
-      <h5 class="modal-title">Alerts</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-    </div><div class="modal-body" id="alertsList">List of alerts...</div></div></div>
-  </div>
+  
   
   <!-- Chat Modal -->
   <div class="modal fade" id="chatModal" tabindex="-1">

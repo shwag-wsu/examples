@@ -1,6 +1,9 @@
 package wsf.example.model;
 
 import jakarta.persistence.*;
+import wsf.example.model.Truck.TruckStatus;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -18,17 +21,23 @@ public class Truck {
     private int fuelQty;
     private String nextDestination;
     private int etaMinutes;
-
+    private long fuelingStart = 0;
     //@ElementCollection
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> currentOrders;
 
     @Enumerated(EnumType.STRING)
     private TruckStatus status;
-
+/*  Removing one to one relationship  
     @OneToOne(fetch = FetchType.EAGER)
     @JsonManagedReference
     private Flight assignedFlight;
+*/
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "truck_id")
+    @JsonManagedReference
+    private List<Flight> assignedFlights = new ArrayList<>();
+
 
     public enum TruckStatus {
         AVAILABLE,
@@ -41,7 +50,7 @@ public class Truck {
 
     public Truck(String driverName, double latitude, double longitude, int fuelQty,
                  String nextDestination, int etaMinutes, TruckStatus status,
-                 List<String> currentOrders, Flight assignedFlight) {
+                 List<String> currentOrders, List<Flight> assignedFlights) {
         this.driverName = driverName;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -50,7 +59,7 @@ public class Truck {
         this.etaMinutes = etaMinutes;
         this.status = status;
         this.currentOrders = currentOrders;
-        this.assignedFlight = assignedFlight;
+        this.assignedFlights = assignedFlights;
     }
 
     // Add getters here so data can serialize to JSON
@@ -63,7 +72,13 @@ public class Truck {
     public int getEtaMinutes() { return etaMinutes; }
     public List<String> getCurrentOrders() { return currentOrders; }
     public TruckStatus getStatus() { return status; }
-    public Flight getAssignedFlight() { return assignedFlight; }
+   // public Flight getAssignedFlight() { return assignedFlight; }
+    public List<Flight> getAssignedFlights() {
+    return assignedFlights;
+    }
+    public long getFuelingStart() {
+        return fuelingStart;
+    }
 
     // Setters (if needed for updates)
     public void setId(Long id) { this.id = id; }
@@ -75,5 +90,22 @@ public class Truck {
     public void setEtaMinutes(int etaMinutes) { this.etaMinutes = etaMinutes; }
     public void setCurrentOrders(List<String> currentOrders) { this.currentOrders = currentOrders; }
     public void setStatus(TruckStatus status) { this.status = status; }
-    public void setAssignedFlight(Flight assignedFlight) { this.assignedFlight = assignedFlight; }
+   // public void setAssignedFlight(Flight assignedFlight) { this.assignedFlight = assignedFlight; }
+    public void setAssignedFlights(List<Flight> assignedFlights) {
+        this.assignedFlights = assignedFlights;
+    }
+    public void assignFlight(Flight flight) {
+        System.out.println("ASSGINING FLIGHTS"+ assignedFlights.size());
+        if (!assignedFlights.contains(flight)) {
+
+            assignedFlights.add(flight);
+            System.out.println("FLIGHTS ASSIGNED");
+            
+        }
+        System.out.println("ASSGINING FLIGHTS final "+ assignedFlights.size());
+    }
+    public void setFuelingStart(long fuelingStart) {
+        this.fuelingStart = fuelingStart;
+    }
+
 }

@@ -82,6 +82,8 @@ This option will package the font-end with the backend to run as one jar.
   mvn install
   mvn spring-boot:run
 
+---
+
 ## 🤝 Contributing
 Contributions are welcome! If you have suggestions or improvements, please fork the repository and submit a pull request.
 

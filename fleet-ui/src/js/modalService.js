@@ -4,7 +4,7 @@ import { Modal } from 'bootstrap';
 
 export function showProfile() {
   fetch('/profile').then(res=>res.json()).then(user => {
-    console.log(user);
+    console.log(user.userInfo);
     document.getElementById('userName').innerText= user.userInfo.fullName;
 
     //new Modal(document.getElementById("profileModal")).show();

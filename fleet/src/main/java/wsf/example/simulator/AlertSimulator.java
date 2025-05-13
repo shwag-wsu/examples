@@ -18,7 +18,7 @@ public class AlertSimulator {
     }
 
     
-    @Scheduled(fixedRate = 20000)
+    //@Scheduled(fixedRate = 20000)
     public void generateFakeAlert() {
         String[] messages = {
             "Fuel below 20%",

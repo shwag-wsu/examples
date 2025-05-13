@@ -84,8 +84,24 @@ public class FleetService {
         return Optional.ofNullable(trucks.get(id));
     }
 
-    public void updateTruck(Truck truck) {
-        trucks.put(truck.getId(), truck);
+    public void updateTruck(Truck updatedTruck) {
+        Truck existing = trucks.get(updatedTruck.getId());
+    if (existing != null) {
+        existing.setLatitude(updatedTruck.getLatitude());
+        existing.setLongitude(updatedTruck.getLongitude());
+        existing.setFuelQty(updatedTruck.getFuelQty());
+        existing.setNextDestination(updatedTruck.getNextDestination());
+        existing.setEtaMinutes(updatedTruck.getEtaMinutes());
+        existing.setStatus(updatedTruck.getStatus());
+        if (updatedTruck.getFuelingStart() > 0) {
+            existing.setFuelingStart(updatedTruck.getFuelingStart());
+        }
+        //existing.setFuelingStart(updatedTruck.getFuelingStart());
+        existing.setAssignedFlights(updatedTruck.getAssignedFlights()); // explicitly set
+    } else {
+        trucks.put(updatedTruck.getId(), updatedTruck); // fallback
+    }
+     //   trucks.put(truck.getId(), truck);
     }
 
     public void preloadTrucks(List<Truck> list) {

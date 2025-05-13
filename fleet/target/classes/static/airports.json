@@ -1,0 +1,31 @@
+{
+    "iataCode":"SEA",
+    "name":"Seattle-Tacoma International",
+    "latitude":47.4502,
+    "longitude":122.3088,
+    "gates":[
+        {"gate":"A1","latitude":47.4425,"longitude":-122.3022},
+        {"gate":"A2","latitude":47.4422,"longitude":-122.3018},
+        {"gate":"A3","latitude":47.4418,"longitude":-122.3013},
+        {"gate":"A4","latitude":47.4415,"longitude":-122.3008},
+        {"gate":"A6","latitude":47.4409,"longitude":-122.2996},
+        {"gate":"A7","latitude":47.4406,"longitude":-122.2992},
+        {"gate":"A8","latitude":47.4404,"longitude":-122.2988},
+        {"gate":"A9","latitude":47.4400,"longitude":-122.2983},
+        {"gate":"A10","latitude":47.4395,"longitude":-122.2980},
+        {"gate":"A12","latitude":47.4387,"longitude":-122.2980},
+        {"gate":"A13","latitude":47.4384,"longitude":-122.2979},
+        {"gate":"A14","latitude":47.4384,"longitude":-122.2976},
+        {"gate":"S1","latitude":47.4385,"longitude":-122.3024},
+        {"gate":"S2","latitude":47.4386,"longitude":-122.3017},
+        {"gate":"S4","latitude":47.4387,"longitude":-122.3012},
+        {"gate":"S5","latitude":47.4389,"longitude":-122.3012},
+        {"gate":"S7","latitude":47.4391,"longitude":-122.3016},
+        {"gate":"S9","latitude":47.4391,"longitude":-122.3020},
+        {"gate":"S10","latitude":47.4390,"longitude":-122.3029},
+        {"gate":"S11","latitude":47.4389,"longitude":-122.3034},
+        {"gate":"S12","latitude":47.4388,"longitude":-122.3033},
+        {"gate":"S15","latitude":47.4385,"longitude":-122.3032},
+        {"gate":"S16","latitude":47.4384,"longitude":-122.3032}
+    ]
+}

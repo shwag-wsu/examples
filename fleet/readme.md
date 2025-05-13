@@ -38,22 +38,25 @@ By leveraging Aviationstack, the service provides accurate and timely flight dat
 ---
 
 ## 📦 Project Structure
-
+<pre>
 fleet/
 ├── src/
 │ ├── main/
 │ │ ├── java/
-│ │ │ └── com/
+│ │ │ └── wsf/
 │ │ │ └── example/
-│ │ │ └── fleet/
-│ │ │ ├── controller/
-│ │ │ ├── service/
-│ │ │ └── model/
-│ │ └── resources/
+| │ │ │ └── config
+| │ │ │ └── model
+| │ │ │ ├── controller
+| │ │ │ └── repository
+| │ │ │ └── scheduler
+| │ │ │ └── service
+| │ │ │ └── simulator
+| │ │ └── resources/
 │ │ └── application.properties
 ├── pom.xml
 └── README.md
-
+</pre>
 
 ---
 

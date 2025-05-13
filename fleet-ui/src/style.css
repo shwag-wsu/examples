@@ -5,7 +5,20 @@
   .dropdown-menu {
     min-width: 300px;
   }
+  body {
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+  .container-fluid {
+    padding-left: 0;
+    padding-right: 0;
+  }
   .btn-sm {
     width: 30px;
     height: 30px;
+  }
+  .dropdown-item:hover {
+    background-color: #e7f1ff;
   }
