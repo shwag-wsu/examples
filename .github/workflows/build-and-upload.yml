@@ -69,10 +69,10 @@ jobs:
           aws-region: us-east-1
       
       - name: Upload Backend to S3
-        run: aws s3 cp ./backend-artifact/fleet-fleet-demo.jar s3://${{ env.S3_BUCKET }}/backend/
+        run: aws s3 cp ./backend-artifact/fleet-fleet-demo.jar s3://${{ secrets.S3_BUCKET }}/backend/
 
       - name: Upload Frontend to S3
-        run: aws s3 cp ./frontend-artifact s3://${{ env.S3_BUCKET }}/ui/ --recursive
+        run: aws s3 cp ./frontend-artifact s3://${{ secrets.S3_BUCKET }}/ui/ --recursive
 
       - name: Login to Amazon ECR
         id: login-ecr
