@@ -89,8 +89,8 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
            docker build -t examples/fleet:$IMAGE_TAG .
-           docker tag examples/fleet:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+           docker tag examples/fleet:$IMAGE_TAG $ECR_REGISTRY/examples/fleet:$IMAGE_TAG
+           docker push $ECR_REGISTRY/examples/fleet:$IMAGE_TAG
         
 
           #  --recursive: Uploads directories recursively gf
