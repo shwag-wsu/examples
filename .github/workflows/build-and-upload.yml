@@ -91,7 +91,7 @@ jobs:
            docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         
 
-          #  --recursive: Uploads directories recursively
+          #  --recursive: Uploads directories recursively gf
           #  --exclude "*" : Exclude all files by default
           #  --include "path/to/your/files/*": Include specific files/folders
           #  ${{ secrets.S3_BUCKET }}/ :  S3 bucket name 
