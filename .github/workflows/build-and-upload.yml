@@ -16,7 +16,6 @@ jobs:
           java-version: '21'
 
       - name: Build Backend
-        working-directory: ./fleet
         run: mvn clean install --file fleet/pom.xml
 
       - name: Upload Backend Artifact
