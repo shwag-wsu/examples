@@ -92,6 +92,16 @@ jobs:
            docker tag examples/fleet:$IMAGE_TAG $ECR_REGISTRY/examples/fleet:$IMAGE_TAG
            docker push $ECR_REGISTRY/examples/fleet:$IMAGE_TAG
         
+      - name: Build and push UI to Amazon ECR
+        working-directory: ./fleet-ui  
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }} #095808645442.dkr.ecr.us-east-1.amazonaws.com
+          ECR_REPOSITORY: ${{secrets.AWS_ECR_REPO}} # examples/fleet
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+           docker build -t examples/fleet-ui:$IMAGE_TAG .
+           docker tag examples/fleet:$IMAGE_TAG $ECR_REGISTRY/examples/fleet-ui:$IMAGE_TAG
+           docker push $ECR_REGISTRY/examples/fleet-ui:$IMAGE_TAG
 
           #  --recursive: Uploads directories recursively gf
           #  --exclude "*" : Exclude all files by default

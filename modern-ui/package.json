@@ -1,0 +1,26 @@
+{
+  "name": "fleet-ui",
+  "version": "1.0.0",
+  "description": "Tailwind + Webpack + Leaflet UI",
+  "scripts": {
+    "dev": "webpack serve --mode development",
+    "build": "webpack --mode production",
+    "tailwind:init": "tailwindcss init -p"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "css-loader": "^6.7.3",
+    "html-webpack-plugin": "^5.5.0",
+    "postcss": "^8.4.21",
+    "postcss-loader": "^7.0.2",
+    "style-loader": "^3.3.2",
+    "tailwindcss": "^3.4.0",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1",
+    "leaflet": "^1.9.4"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  }
+}
