@@ -6,6 +6,6 @@ EXPOSE 8083
 
 WORKDIR /app
 
-COPY ./backend-artifact/fleet-fleet-demo.jar fleet-app.jar
+COPY ./target/fleet-fleet-demo.jar fleet-app.jar
 
 CMD ["java", "-jar", "fleet-app.jar"]
