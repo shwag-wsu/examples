@@ -4,4 +4,3 @@ node_modules/
 src/main/resources/application-local.properties
 logos/
 fleet.db
-fleet/target/fleet-fleet-demo.jar

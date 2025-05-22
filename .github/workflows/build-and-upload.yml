@@ -76,6 +76,12 @@ jobs:
       - name: Upload Frontend to S3
         run: aws s3 cp ./frontend-artifact s3://${{ secrets.S3_BUCKET }}/ui/ --recursive
 
+      - name: Copy to target
+        run: cp ./backend-artifact/fleet-fleet-demo.jar ./fleet/target/fleet-fleet-demo.jar
+
+      - name: Check built jar
+        run: ls -l ./fleet/target
+
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
