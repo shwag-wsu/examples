@@ -745,3 +745,71 @@ java.io.IOException: An established connection was aborted by the software in yo
 2025-05-21T18:45:38.705-07:00  INFO 31428 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
 2025-05-21T18:45:38.727-07:00  INFO 31428 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
 2025-05-21T18:45:38.736-07:00  INFO 31428 --- [restartedMain] wsf.example.FleetApp                     : Started FleetApp in 4.785 seconds (process running for 5.135)
+2025-05-21T19:27:46.974-07:00  INFO 34800 --- [restartedMain] wsf.example.FleetApp                     : Starting FleetApp using Java 21.0.7 with PID 34800 (D:\github\examples\fleet\target\classes started by scott in D:\github\examples)
+2025-05-21T19:27:46.974-07:00 DEBUG 34800 --- [restartedMain] wsf.example.FleetApp                     : Running with Spring Boot v3.5.0-SNAPSHOT, Spring v6.2.7
+2025-05-21T19:27:46.975-07:00  INFO 34800 --- [restartedMain] wsf.example.FleetApp                     : No active profile set, falling back to 1 default profile: "default"
+2025-05-21T19:27:47.006-07:00  INFO 34800 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-05-21T19:27:47.006-07:00  INFO 34800 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-05-21T19:27:47.636-07:00  INFO 34800 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-21T19:27:47.684-07:00  INFO 34800 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 40 ms. Found 3 JPA repository interfaces.
+2025-05-21T19:27:48.176-07:00  INFO 34800 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-05-21T19:27:48.187-07:00  INFO 34800 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-21T19:27:48.188-07:00  INFO 34800 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-05-21T19:27:48.235-07:00  INFO 34800 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-21T19:27:48.235-07:00  INFO 34800 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1228 ms
+2025-05-21T19:27:48.420-07:00  INFO 34800 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-21T19:27:48.481-07:00  INFO 34800 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.15.Final
+2025-05-21T19:27:48.511-07:00  INFO 34800 --- [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-21T19:27:48.770-07:00  INFO 34800 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-21T19:27:48.801-07:00  INFO 34800 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-05-21T19:27:48.880-07:00  INFO 34800 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@53fed8d4
+2025-05-21T19:27:48.882-07:00  INFO 34800 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-05-21T19:27:48.907-07:00  INFO 34800 --- [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 3.42
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-21T19:27:49.529-07:00  INFO 34800 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-21T19:27:49.552-07:00  INFO 34800 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-21T19:27:50.180-07:00  WARN 34800 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-05-21T19:27:50.932-07:00  INFO 34800 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2025-05-21T19:27:51.369-07:00  INFO 34800 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-05-21T19:27:51.396-07:00  INFO 34800 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-05-21T19:27:51.407-07:00  INFO 34800 --- [restartedMain] wsf.example.FleetApp                     : Started FleetApp in 4.769 seconds (process running for 5.148)
+2025-05-21T19:27:57.542-07:00  INFO 27740 --- [restartedMain] wsf.example.FleetApp                     : Starting FleetApp using Java 21.0.7 with PID 27740 (D:\github\examples\fleet\target\classes started by scott in D:\github\examples)
+2025-05-21T19:27:57.543-07:00 DEBUG 27740 --- [restartedMain] wsf.example.FleetApp                     : Running with Spring Boot v3.5.0-SNAPSHOT, Spring v6.2.7
+2025-05-21T19:27:57.544-07:00  INFO 27740 --- [restartedMain] wsf.example.FleetApp                     : No active profile set, falling back to 1 default profile: "default"
+2025-05-21T19:27:57.574-07:00  INFO 27740 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-05-21T19:27:57.575-07:00  INFO 27740 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-05-21T19:27:58.178-07:00  INFO 27740 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-21T19:27:58.229-07:00  INFO 27740 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 42 ms. Found 3 JPA repository interfaces.
+2025-05-21T19:27:58.762-07:00  INFO 27740 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-05-21T19:27:58.775-07:00  INFO 27740 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-21T19:27:58.776-07:00  INFO 27740 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-05-21T19:27:58.818-07:00  INFO 27740 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-21T19:27:58.818-07:00  INFO 27740 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1243 ms
+2025-05-21T19:27:59.017-07:00  INFO 27740 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-21T19:27:59.086-07:00  INFO 27740 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.15.Final
+2025-05-21T19:27:59.119-07:00  INFO 27740 --- [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-21T19:27:59.371-07:00  INFO 27740 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-21T19:27:59.396-07:00  INFO 27740 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-05-21T19:27:59.481-07:00  INFO 27740 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@2f392599
+2025-05-21T19:27:59.483-07:00  INFO 27740 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-05-21T19:27:59.513-07:00  INFO 27740 --- [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 3.42
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-21T19:28:00.105-07:00  INFO 27740 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-21T19:28:00.131-07:00  INFO 27740 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-21T19:28:00.768-07:00  WARN 27740 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-05-21T19:28:01.393-07:00  INFO 27740 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2025-05-21T19:28:01.890-07:00  INFO 27740 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-05-21T19:28:01.913-07:00  INFO 27740 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-05-21T19:28:01.922-07:00  INFO 27740 --- [restartedMain] wsf.example.FleetApp                     : Started FleetApp in 4.712 seconds (process running for 5.048)
