@@ -16,7 +16,7 @@ jobs:
           java-version: '21'
 
       - name: Build Backend
-        run: mvn clean install --file fleet/pom.xml
+        run: mvn clean package --file fleet/pom.xml
 
       - name: Upload Backend Artifact
         uses: actions/upload-artifact@v4
