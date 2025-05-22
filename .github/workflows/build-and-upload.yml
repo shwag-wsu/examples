@@ -100,7 +100,7 @@ jobs:
           IMAGE_TAG: latest # ${{ github.sha }}
         run: |
            docker build -t examples/fleet-ui:$IMAGE_TAG .
-           docker tag examples/fleet:$IMAGE_TAG $ECR_REGISTRY/examples/fleet-ui:$IMAGE_TAG
+           docker tag examples/fleet-ui:$IMAGE_TAG $ECR_REGISTRY/examples/fleet-ui:$IMAGE_TAG
            docker push $ECR_REGISTRY/examples/fleet-ui:$IMAGE_TAG
            
 

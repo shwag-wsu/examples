@@ -711,3 +711,37 @@ java.io.IOException: An established connection was aborted by the software in yo
 	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
 
 2025-05-21T18:24:02.121-07:00  INFO 10944 --- [http-nio-8080-exec-6] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 191 ms
+2025-05-21T18:45:34.280-07:00  INFO 31428 --- [restartedMain] wsf.example.FleetApp                     : Starting FleetApp using Java 21.0.7 with PID 31428 (D:\github\examples\fleet\target\classes started by scott in D:\github\examples)
+2025-05-21T18:45:34.281-07:00 DEBUG 31428 --- [restartedMain] wsf.example.FleetApp                     : Running with Spring Boot v3.5.0-SNAPSHOT, Spring v6.2.7
+2025-05-21T18:45:34.281-07:00  INFO 31428 --- [restartedMain] wsf.example.FleetApp                     : No active profile set, falling back to 1 default profile: "default"
+2025-05-21T18:45:34.312-07:00  INFO 31428 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-05-21T18:45:34.312-07:00  INFO 31428 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-05-21T18:45:34.941-07:00  INFO 31428 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-21T18:45:34.992-07:00  INFO 31428 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 42 ms. Found 3 JPA repository interfaces.
+2025-05-21T18:45:35.519-07:00  INFO 31428 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-05-21T18:45:35.531-07:00  INFO 31428 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-05-21T18:45:35.531-07:00  INFO 31428 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.41]
+2025-05-21T18:45:35.574-07:00  INFO 31428 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-05-21T18:45:35.575-07:00  INFO 31428 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1262 ms
+2025-05-21T18:45:35.760-07:00  INFO 31428 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-21T18:45:35.819-07:00  INFO 31428 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.15.Final
+2025-05-21T18:45:35.856-07:00  INFO 31428 --- [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-21T18:45:36.080-07:00  INFO 31428 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-21T18:45:36.104-07:00  INFO 31428 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-05-21T18:45:36.185-07:00  INFO 31428 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.sqlite.jdbc4.JDBC4Connection@265efb4c
+2025-05-21T18:45:36.189-07:00  INFO 31428 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-05-21T18:45:36.218-07:00  INFO 31428 --- [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 3.42
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-05-21T18:45:36.839-07:00  INFO 31428 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-21T18:45:36.865-07:00  INFO 31428 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-21T18:45:37.525-07:00  WARN 31428 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-05-21T18:45:38.267-07:00  INFO 31428 --- [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2025-05-21T18:45:38.705-07:00  INFO 31428 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2025-05-21T18:45:38.727-07:00  INFO 31428 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-05-21T18:45:38.736-07:00  INFO 31428 --- [restartedMain] wsf.example.FleetApp                     : Started FleetApp in 4.785 seconds (process running for 5.135)
