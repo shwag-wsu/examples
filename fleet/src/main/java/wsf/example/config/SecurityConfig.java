@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
-
+/*
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -22,8 +22,7 @@ public class SecurityConfig {
         return http.build();
     }
 }
-/* 
-
+     */
 @Configuration
 public class SecurityConfig {
 
@@ -47,4 +46,4 @@ public class SecurityConfig {
     //        .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
     //    return http.build();
    // }
-} */
+} 
