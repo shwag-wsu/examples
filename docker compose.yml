@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  ui:
+    image: 095808645442.dkr.ecr.us-east-1.amazonaws.com/examples/fleet-ui:latest
+    ports:
+      - "8086:80"
+    networks:
+      - appnet
+
+  api:
+    image: 095808645442.dkr.ecr.us-east-1.amazonaws.com/examples/fleet:latest
+    ports:
+      - "8087:8080"
+    environment:
+      - spring_security_oauth2_client_registration_cognito_client-id=50a1cce2s6n8ednqklk8621ehs
+      - spring_security_oauth2_client_registration_cognito_client-secret=1tqrfoea6e2cgbjk2v53s22nl93knoruoqb6ktp11bdfrsd7vp7l
+      - spring_security_oauth2_client_registration_cognito_redirect-uri=http://localhost:8080/login/oauth2/code/cognito
+      - spring_security_oauth2_client_provider_cognito_issuer-uri=https://cognito-idp.us-east-1.amazonaws.com/us-east-1_Ui4u7p8GQ
+      - spring_datasource_url=jdbc:sqlite:fleet.db
+      - spring_datasource_driver-class-name=org.sqlite.JDBC
+      - spring_datasource_initialization-mode=always
+      - spring_jpa_database-platform=org.hibernate.community.dialect.SQLiteDialect
+      - spring_jpa_show-sql=true
+      - spring_jpa_hibernate_ddl-auto=update
+      - spring_config_import=optional:classpath:application-local.properties
+      - logging_level_root=INFO
+      - logging_level_wsf_example=DEBUG
+      - logging_file_name=logs/fleet-app.log
+      - aviationstack.api.key=33750b427b4360c29d0ddcaea92d7952
+    networks:
+      - appnet
+
+  proxy:
+    image: nginx:alpine
+    volumes:
+      - /mnt/labdata/app1/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8085:80"
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge
