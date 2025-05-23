@@ -23,6 +23,7 @@ public class SecurityConfig {
     }
 }
      */
+@EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
