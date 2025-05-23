@@ -17,7 +17,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(authz -> authz
                 .anyRequest().authenticated()
             )
-            .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
+            .oauth2ResourceServer(oauth2 -> oauth2.jwt())
+            .formLogin().disable(); // ⬅️ Important
         return http.build();
     }
 }
